@@ -7,12 +7,15 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldREST {
 
+    private static final String text = "witajSwiecie";
+
     @RequestMapping("/hello")
     public ResponseEntity<String> see(){
         return ResponseEntity.ok()
                 .body(get());
     }
+
     public String get(){
-        return "witajSwiecie";
+        return text;
     }
 }
