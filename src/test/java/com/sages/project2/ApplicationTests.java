@@ -1,5 +1,6 @@
 package com.sages.project2;
 
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
@@ -7,7 +8,10 @@ import org.springframework.boot.test.context.SpringBootTest;
 class ApplicationTests {
 
     @Test
-    void contextLoads() {
+    public void shouldReturnText() throws Exception {
+        String expected = "witajSwiecie";
+        String received = "witajSwiecie";
+        Assertions.assertEquals(received, expected);
     }
 
 }
