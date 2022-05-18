@@ -13,6 +13,7 @@ public class HelloWorldREST {
                 .body(get());
     }
     public String get(){
-        return "witajSwiecie";
+        String text = "witajSwiecie";
+        return text;
     }
 }
