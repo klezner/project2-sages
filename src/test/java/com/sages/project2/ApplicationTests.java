@@ -10,7 +10,7 @@ class ApplicationTests {
     @Test
     public void shouldReturnText() throws Exception {
         String expected = "witajSwiecie";
-        String received = "witajSwiecie!";
+        String received = "witajSwiecie!!!";
         Assertions.assertEquals(received, expected);
     }
 
