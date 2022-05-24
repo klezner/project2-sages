@@ -1,6 +1,6 @@
-package com.sages.project2.port.adapter.persistence.repository;
+package com.sages.project2.adapter.persistence.repository;
 
-import com.sages.project2.port.adapter.persistence.entity.SampleEntity;
+import com.sages.project2.adapter.persistence.entity.SampleEntity;
 import org.springframework.stereotype.Repository;
 
 @Repository

@@ -1,8 +1,8 @@
 package com.sages.project2.domain.service;
 
 import com.sages.project2.domain.model.Sample;
-import com.sages.project2.port.in.SampleService;
-import com.sages.project2.port.out.SampleRepository;
+import com.sages.project2.domain.port.in.SampleService;
+import com.sages.project2.domain.port.out.SampleRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor

@@ -1,4 +1,4 @@
-package com.sages.project2.port.in;
+package com.sages.project2.domain.port.in;
 
 import com.sages.project2.domain.model.Sample;
 

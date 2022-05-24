@@ -1,6 +1,6 @@
-package com.sages.project2.port.adapter.persistence.mapper;
+package com.sages.project2.adapter.persistence.mapper;
 
-import com.sages.project2.port.adapter.persistence.entity.SampleEntity;
+import com.sages.project2.adapter.persistence.entity.SampleEntity;
 import com.sages.project2.domain.model.Sample;
 
 public interface PersistenceSampleMapper {

@@ -1,10 +1,10 @@
-package com.sages.project2.port.adapter.persistence;
+package com.sages.project2.adapter.persistence;
 
-import com.sages.project2.port.adapter.persistence.entity.SampleEntity;
-import com.sages.project2.port.adapter.persistence.mapper.PersistenceSampleMapper;
-import com.sages.project2.port.adapter.persistence.repository.SampleRepo;
+import com.sages.project2.adapter.persistence.repository.SampleRepo;
+import com.sages.project2.adapter.persistence.entity.SampleEntity;
+import com.sages.project2.adapter.persistence.mapper.PersistenceSampleMapper;
 import com.sages.project2.domain.model.Sample;
-import com.sages.project2.port.out.SampleRepository;
+import com.sages.project2.domain.port.out.SampleRepository;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
