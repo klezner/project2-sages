@@ -1,6 +1,6 @@
-package com.sages.project2.adapter.rest.mapper;
+package com.sages.project2.adapters.rest.mappers;
 
-import com.sages.project2.adapter.rest.dto.UserDto;
+import com.sages.project2.adapters.rest.dtos.UserDto;
 import com.sages.project2.domain.model.User;
 import org.mapstruct.Mapper;
 

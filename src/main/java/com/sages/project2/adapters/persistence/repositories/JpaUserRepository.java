@@ -1,6 +1,6 @@
-package com.sages.project2.adapter.persistence.repository;
+package com.sages.project2.adapters.persistence.repositories;
 
-import com.sages.project2.adapter.persistence.entity.UserEntity;
+import com.sages.project2.adapters.persistence.entities.UserEntity;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaUserRepository extends JpaRepository<UserEntity,Long> {

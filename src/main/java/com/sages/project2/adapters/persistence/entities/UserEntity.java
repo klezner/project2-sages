@@ -1,4 +1,4 @@
-package com.sages.project2.adapter.persistence.entity;
+package com.sages.project2.adapters.persistence.entities;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

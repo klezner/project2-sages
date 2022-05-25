@@ -1,4 +1,4 @@
-package com.sages.project2.domain.port.out;
+package com.sages.project2.domain.ports.out;
 
 import com.sages.project2.domain.model.User;
 

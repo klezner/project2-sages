@@ -1,8 +1,8 @@
-package com.sages.project2.domain.service;
+package com.sages.project2.domain.services;
 
 import com.sages.project2.domain.model.User;
-import com.sages.project2.domain.port.in.UserService;
-import com.sages.project2.domain.port.out.UserRepository;
+import com.sages.project2.domain.ports.in.UserService;
+import com.sages.project2.domain.ports.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 

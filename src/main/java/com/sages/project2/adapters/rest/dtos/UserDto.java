@@ -1,4 +1,4 @@
-package com.sages.project2.adapter.rest.dto;
+package com.sages.project2.adapters.rest.dtos;
 
 import lombok.Data;
 

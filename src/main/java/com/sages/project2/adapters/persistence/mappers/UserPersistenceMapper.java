@@ -1,6 +1,6 @@
-package com.sages.project2.adapter.persistence.mapper;
+package com.sages.project2.adapters.persistence.mappers;
 
-import com.sages.project2.adapter.persistence.entity.UserEntity;
+import com.sages.project2.adapters.persistence.entities.UserEntity;
 import com.sages.project2.domain.model.User;
 import org.mapstruct.Mapper;
 

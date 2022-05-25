@@ -1,8 +1,8 @@
-package com.sages.project2.adapter.rest;
+package com.sages.project2.adapters.rest;
 
-import com.sages.project2.adapter.rest.dto.UserDto;
-import com.sages.project2.adapter.rest.mapper.UserRestMapper;
-import com.sages.project2.domain.port.in.UserService;
+import com.sages.project2.adapters.rest.dtos.UserDto;
+import com.sages.project2.adapters.rest.mappers.UserRestMapper;
+import com.sages.project2.domain.ports.in.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
