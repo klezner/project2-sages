@@ -1,6 +1,6 @@
 package com.sages.project2.domain.services;
 
-import com.sages.project2.domain.model.User;
+import com.sages.project2.domain.models.User;
 import com.sages.project2.domain.ports.in.UserService;
 import com.sages.project2.domain.ports.out.UserRepository;
 import lombok.RequiredArgsConstructor;

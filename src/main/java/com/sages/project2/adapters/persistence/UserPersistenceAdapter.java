@@ -2,7 +2,7 @@ package com.sages.project2.adapters.persistence;
 
 import com.sages.project2.adapters.persistence.mappers.UserPersistenceMapper;
 import com.sages.project2.adapters.persistence.repositories.JpaUserRepository;
-import com.sages.project2.domain.model.User;
+import com.sages.project2.domain.models.User;
 import com.sages.project2.domain.ports.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
