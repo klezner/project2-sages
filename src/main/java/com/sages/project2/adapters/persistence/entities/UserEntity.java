@@ -12,11 +12,7 @@ import lombok.Setter;
 @Getter
 @Setter
 @Table(name = "users")
-public class UserEntity {
-
-    @Id
-    @GeneratedValue
-    private Long userId;
+public class UserEntity extends BaseEntity {
 
     private String login;
     //enum?
