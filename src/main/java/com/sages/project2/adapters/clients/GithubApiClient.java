@@ -23,7 +23,11 @@ public class GithubApiClient {
     }
 
     public String createRepository(String repoName) throws IOException {
-        GHRepository repository = github.createRepository(repoName).create();
+        GHRepository repository = getRepository(repoName);
+        if (repository != null) {
+            return repository.getFullName();
+        }
+        repository = github.createRepository(repoName).create();
 
         repository.createContent()
                 .content("Readme file for " + repository.getFullName())
