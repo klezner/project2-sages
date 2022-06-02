@@ -1,4 +1,4 @@
-package com.sages.project2;
+package com.sages.project2.config;
 
 import org.springframework.context.annotation.Configuration;
 
