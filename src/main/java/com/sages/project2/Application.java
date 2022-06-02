@@ -19,12 +19,14 @@ public class Application {
 
         githubAPICLient.connect();
         System.out.println("Github client connected");
-        String repositoryName = githubAPICLient.createRepository("02062022 repository add");
+        String repositoryName = githubAPICLient.createRepository("username/repo");
         System.out.println("New repository created");
+        githubAPICLient.createBranchOnRepository(repositoryName, "new-branch");
+        System.out.println("New branch created");
 
         githubAPICLient.addFileToBranch(new File("src/main/java/com/sages/project2/WebSecurityConfig.java"),
                 repositoryName,
-                "main");
+                "new-branch");
         System.out.println("File added to branch");
     }
 
