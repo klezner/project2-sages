@@ -27,7 +27,9 @@ public class GithubApiClient {
         if (repository != null) {
             return repository.getFullName();
         }
-        repository = github.createRepository(repoName).create();
+        repository = github.createRepository(repoName)
+                .private_(true)
+                .create();
 
         repository.createContent()
                 .content("Readme file for " + repository.getFullName())
