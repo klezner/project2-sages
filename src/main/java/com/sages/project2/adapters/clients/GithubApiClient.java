@@ -17,51 +17,40 @@ public class GithubApiClient {
     public void connect() {
         try {
             this.github = GitHubBuilder.fromPropertyFile("src/main/resources/properties.github").build();
-        } catch (IOException e){
-            e.printStackTrace();
-        }
-    }
-
-    public String createRepository(String repoName) throws IOException {
-        GHRepository repository = getRepository(repoName);
-        if (repository != null) {
-            return repository.getFullName();
-        }
-        repository = github.createRepository(repoName).create();
-
-        repository.createContent()
-                .content("Readme file for " + repository.getFullName())
-                .message("This commit is adding README file")
-                .path("README.md")
-                .commit();
-        return repository.getFullName();
-    }
-
-    public GHRepository getRepository(String repoName) {
-        GHRepository repository = null;
-        try {
-            repository = github.getRepository(repoName);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return repository;
     }
 
-    public GHBranch createBranchOnRepository(String repoName, String branchName) throws IOException {
-        GHRepository repository = getRepository(repoName);
-        String sha1 = repository.getBranch("main").getSHA1();
-        repository.createRef("refs/heads/" + branchName, sha1);
-        return repository.getBranch(branchName);
+    public GHRepository createRepository(String repoName) throws IOException {
+        return github.createRepository(repoName)
+                .private_(true)
+                .create();
     }
 
-    public void addFileToBranch(File file, String repoName, String branchName) throws IOException {
-        GHRepository repository = getRepository(repoName);
-        repository.createContent()
-                .branch(branchName)
-                .content(FileManager.readfileAsBytes(file))
-                .message("New java file added to branch")
-                .path(file.getName())
+    public void createRepoContent(GHRepository ghRepository, String content, String message, String path) throws IOException {
+        ghRepository.createContent()
+                .content(content)
+                .message(message)
+                .path(path)
                 .commit();
     }
 
+    public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {
+        String sha1 = repository.getBranch("main").getSHA1();
+        repository.createRef("refs/heads/" + branchName, sha1);
+    }
+
+    public void addFileToBranch(File file,
+                                            GHRepository repository,
+                                            String branchName,
+                                            String message) throws IOException {
+        repository.createContent()
+                .branch(branchName)
+                .content(FileManager.readfileAsBytes(file))
+                .message(message)
+                .path(file.getName())
+                .commit();
+
+    }
 }

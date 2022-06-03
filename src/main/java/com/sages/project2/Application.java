@@ -1,6 +1,9 @@
 package com.sages.project2;
 
 import com.sages.project2.adapters.clients.GithubApiClient;
+import org.kohsuke.github.GHContentBuilder;
+import org.kohsuke.github.GHContentUpdateResponse;
+import org.kohsuke.github.GHRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
@@ -11,6 +14,9 @@ import java.io.IOException;
 @SpringBootApplication
 public class Application {
 
+    public static final String REPO_NAME = "username/test";
+    public static final String NEW_BRANCH = "new-branch";
+
     public static void main(String[] args) throws IOException {
 
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
@@ -19,13 +25,25 @@ public class Application {
 
         githubAPICLient.connect();
         System.out.println("Github client connected");
-        String repositoryName = githubAPICLient.createRepository("02062022 repository add");
+
+        GHRepository repository = githubAPICLient.createRepository(REPO_NAME);
         System.out.println("New repository created");
 
+        githubAPICLient.createRepoContent(repository,
+                        "Readme file content",
+                        "This commit is adding README file",
+                        "README.md");
+        System.out.println("New repository committed with README.md");
+
+        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
+        System.out.println("New branch created");
+
         githubAPICLient.addFileToBranch(new File("src/main/java/com/sages/project2/WebSecurityConfig.java"),
-                repositoryName,
-                "main");
-        System.out.println("File added to branch");
+                repository,
+                NEW_BRANCH,
+                "New java file added to branch");
+        System.out.println("File added to the branch");
+
     }
 
 }
