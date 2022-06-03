@@ -36,6 +36,7 @@ public class GithubApiClient {
                 .commit();
     }
 
+
     public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {
         String sha1 = repository.getBranch("main").getSHA1();
         repository.createRef("refs/heads/" + branchName, sha1);
