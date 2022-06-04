@@ -13,8 +13,8 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class Application {
-
-    public static final String REPO_NAME = "username/test";
+    
+    public static final String REPO_NAME = "hello-world";
     public static final String NEW_BRANCH = "new-branch";
 
     public static void main(String[] args) throws IOException {
@@ -26,13 +26,10 @@ public class Application {
         githubAPICLient.connect();
         System.out.println("Github client connected");
 
-        GHRepository repository = githubAPICLient.createRepository(REPO_NAME);
-        System.out.println("New repository created");
-
-        githubAPICLient.createRepoContent(repository,
-                        "Readme file content",
-                        "This commit is adding README file",
-                        "README.md");
+        GHRepository repository = githubAPICLient.createRepository(REPO_NAME,
+                "Readme file content",
+                "This commit is adding README file",
+                "README.md");
         System.out.println("New repository committed with README.md");
 
         githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
@@ -42,7 +39,13 @@ public class Application {
                 repository,
                 NEW_BRANCH,
                 "New java file added to branch");
+
         System.out.println("File added to the branch");
+
+        var repoFromGitHub = githubAPICLient.getRepository(repository.getFullName());
+        System.out.println("Repo from GitHub: " + repoFromGitHub.getFullName());
+
+    }
 
     }
 
