@@ -13,7 +13,7 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class Application {
-    
+
     public static final String REPO_NAME = "hello-world";
     public static final String NEW_BRANCH = "new-branch";
 
@@ -47,6 +47,6 @@ public class Application {
 
     }
 
-    }
-
 }
+
+
