@@ -22,20 +22,25 @@ public class GithubApiClient {
         }
     }
 
-    public GHRepository createRepository(String repoName) throws IOException {
-        return github.createRepository(repoName)
+    public GHRepository createRepository(String repoName,
+                                         String content,
+                                         String message,
+                                         String path) throws IOException {
+        var ghRepository = github.createRepository(repoName)
                 .private_(true)
                 .create();
-    }
-
-    public void createRepoContent(GHRepository ghRepository, String content, String message, String path) throws IOException {
+        
         ghRepository.createContent()
                 .content(content)
                 .message(message)
                 .path(path)
                 .commit();
+        return ghRepository;
     }
-
+    
+    public GHRepository getRepository(String repoName) throws IOException {
+        return github.getRepository(repoName);
+    }
 
     public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {
         String sha1 = repository.getBranch("main").getSHA1();
@@ -43,9 +48,9 @@ public class GithubApiClient {
     }
 
     public void addFileToBranch(File file,
-                                            GHRepository repository,
-                                            String branchName,
-                                            String message) throws IOException {
+                                GHRepository repository,
+                                String branchName,
+                                String message) throws IOException {
         repository.createContent()
                 .branch(branchName)
                 .content(FileManager.readfileAsBytes(file))
