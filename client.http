@@ -1,0 +1,15 @@
+POST http://localhost:9090/quests/admin
+Accept: application/json
+Content-Type: application/json
+
+{
+  "questName": "hello-world",
+  "difficulty": "BEGINNER",
+  "topic": "Basic syntax."
+}
+
+###
+
+DELETE https://api.github.com/repos/${user}/${repo-name}
+Accept: application/vnd.github.v3+json
+Authorization: Bearer token z mozliwoscia usuwania repo

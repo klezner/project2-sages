@@ -23,17 +23,17 @@ public class GithubApiClient {
     }
 
     public GHRepository createRepository(String repoName,
-                                         String content,
-                                         String message,
-                                         String path) throws IOException {
+                                         String fileContent,
+                                         String commitMessage,
+                                         String filePath) throws IOException {
         var ghRepository = github.createRepository(repoName)
                 .private_(true)
                 .create();
         
         ghRepository.createContent()
-                .content(content)
-                .message(message)
-                .path(path)
+                .content(fileContent)
+                .message(commitMessage)
+                .path(filePath)
                 .commit();
         return ghRepository;
     }

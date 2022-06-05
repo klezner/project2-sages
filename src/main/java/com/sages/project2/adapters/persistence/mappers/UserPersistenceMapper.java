@@ -8,4 +8,5 @@ import org.mapstruct.Mapper;
 public interface UserPersistenceMapper {
 
     UserEntity toEntity(User user);
+
 }

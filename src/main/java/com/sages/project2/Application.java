@@ -13,8 +13,8 @@ import java.io.IOException;
 
 @SpringBootApplication
 public class Application {
-    
-    public static final String REPO_NAME = "hello-world";
+
+    public static final String REPO_NAME = "hello-world-final";
     public static final String NEW_BRANCH = "new-branch";
 
     public static void main(String[] args) throws IOException {
@@ -25,28 +25,28 @@ public class Application {
 
         githubAPICLient.connect();
         System.out.println("Github client connected");
-
-        GHRepository repository = githubAPICLient.createRepository(REPO_NAME,
-                "Readme file content",
-                "This commit is adding README file",
-                "README.md");
-        System.out.println("New repository committed with README.md");
-
-        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
-        System.out.println("New branch created");
-
-        githubAPICLient.addFileToBranch(new File("src/main/java/com/sages/project2/WebSecurityConfig.java"),
-                repository,
-                NEW_BRANCH,
-                "New java file added to branch");
-
-        System.out.println("File added to the branch");
-
-        var repoFromGitHub = githubAPICLient.getRepository(repository.getFullName());
-        System.out.println("Repo from GitHub: " + repoFromGitHub.getFullName());
-
-    }
+//
+//        GHRepository repository = githubAPICLient.createRepository(REPO_NAME,
+//                "Readme file content",
+//                "This commit is adding README file",
+//                "README.md");
+//        System.out.println("New repository committed with README.md");
+//
+//        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
+//        System.out.println("New branch created");
+//
+//        githubAPICLient.addFileToBranch(new File("src/main/java/com/sages/project2/WebSecurityConfig.java"),
+//                repository,
+//                NEW_BRANCH,
+//                "New java file added to branch");
+//
+//        System.out.println("File added to the branch");
+//
+//        var repoFromGitHub = githubAPICLient.getRepository(repository.getFullName());
+//        System.out.println("Repo from GitHub: " + repoFromGitHub.getFullName());
 
     }
 
 }
+
+
