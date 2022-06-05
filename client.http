@@ -10,6 +10,6 @@ Content-Type: application/json
 
 ###
 
-DELETE https://api.github.com/repos/${user}/${repo-name}
+DELETE https://api.github.com/repos/bartmj/hello-world
 Accept: application/vnd.github.v3+json
-Authorization: Bearer token z mozliwoscia usuwania repo
+Authorization: Bearer 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
