@@ -9,7 +9,19 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:9090/users
+Accept: : application/json
+Content-Type: application/json
 
-DELETE https://api.github.com/repos/bartmj/hello-world
+{
+  "userId": 1,
+  "login": "Johnny",
+  "role": "user"
+
+}
+
+###
+
+DELETE https://api.github.com/repos/${user}/${nazwa-repo}
 Accept: application/vnd.github.v3+json
-Authorization: Bearer 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
+Authorization: Bearer token_do_usuwania_repo

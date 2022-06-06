@@ -19,7 +19,7 @@ public class UserController {
     private final UserService userService;
     private final UserRestMapper userRestMapper;
 
-    @PostMapping()
+    @PostMapping
     public ResponseEntity<Long> saveUser(@RequestBody UserDto userDto){
         Long userId = userService.saveUser(userRestMapper.toDomain(userDto));
         return new ResponseEntity<>(userId,HttpStatus.OK);
