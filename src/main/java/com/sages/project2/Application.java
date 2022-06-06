@@ -26,24 +26,21 @@ public class Application {
         githubAPICLient.connect();
         System.out.println("Github client connected");
 
-        GHRepository repository = githubAPICLient.createRepository(REPO_NAME,
-                "Readme file content",
-                "This commit is adding README file",
-                "README.md");
-        System.out.println("New repository committed with README.md");
+//        GHRepository repository = githubAPICLient.createRepository(REPO_NAME);
+//        System.out.println("New repository created");
 
-        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
-        System.out.println("New branch created");
-
-        githubAPICLient.addFileToBranch(new File("src/main/java/com/sages/project2/WebSecurityConfig.java"),
-                repository,
-                NEW_BRANCH,
-                "New java file added to branch");
-
-        System.out.println("File added to the branch");
-
-        var repoFromGitHub = githubAPICLient.getRepository(repository.getFullName());
-        System.out.println("Repo from GitHub: " + repoFromGitHub.getFullName());
+//        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
+//        System.out.println("New branch created");
+//
+//        githubAPICLient.addFileToBranch(new File("src/main/java/com/sages/project2"),
+//                repository,
+//                NEW_BRANCH,
+//                "New java file added to branch");
+//
+//        System.out.println("File added to the branch");
+//
+//        var repoFromGitHub = githubAPICLient.getRepository(repository.getFullName());
+//        System.out.println("Repo from GitHub: " + repoFromGitHub.getFullName());
 
     }
 

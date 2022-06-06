@@ -22,22 +22,22 @@ public class GithubApiClient {
         }
     }
 
-    public GHRepository createRepository(String repoName,
-                                         String fileContent,
-                                         String commitMessage,
-                                         String filePath) throws IOException {
+    public GHRepository createRepository(String repoName) throws IOException {
         var ghRepository = github.createRepository(repoName)
                 .private_(true)
                 .create();
-        
+
+        return ghRepository;
+    }
+
+    private void createRepoContent(String fileContent, String commitMessage, String filePath, GHRepository ghRepository) throws IOException {
         ghRepository.createContent()
                 .content(fileContent)
                 .message(commitMessage)
                 .path(filePath)
                 .commit();
-        return ghRepository;
     }
-    
+
     public GHRepository getRepository(String repoName) throws IOException {
         return github.getRepository(repoName);
     }
