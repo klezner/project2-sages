@@ -24,12 +24,9 @@ public class QuestManager implements QuestService {
     @Override
     public Quest saveQuest(Quest quest) throws IOException {
         // Create new repo on github and turn back repository object
-        var repository = githubApiClient.createRepository(quest.getQuestName(),
-                "Readme content",
-                "commit message",
-                "README.md");
+        var repository = githubApiClient.createRepository(quest.getQuestName());
         var repoUrl = repository.getHtmlUrl();
-        quest.setStatus(QuestStatus.COMPLETED);
+        quest.setStatus(QuestStatus.CREATED);
         quest.setRepoUrl(repoUrl.toString());
         return questRepository.saveQuest(quest);
 

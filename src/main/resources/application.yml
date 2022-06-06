@@ -6,8 +6,6 @@ spring:
     username: admin
     password: admin
     url: jdbc:h2:file:./data/h2.db
-  messages:
-    basename: text
   h2:
     console:
       enabled: true

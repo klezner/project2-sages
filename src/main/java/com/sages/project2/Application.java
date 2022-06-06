@@ -14,7 +14,7 @@ import java.io.IOException;
 @SpringBootApplication
 public class Application {
 
-    public static final String REPO_NAME = "hello-world-final";
+    public static final String REPO_NAME = "hello-world";
     public static final String NEW_BRANCH = "new-branch";
 
     public static void main(String[] args) throws IOException {
@@ -25,7 +25,7 @@ public class Application {
 
         githubAPICLient.connect();
         System.out.println("Github client connected");
-//
+
 //        GHRepository repository = githubAPICLient.createRepository(REPO_NAME,
 //                "Readme file content",
 //                "This commit is adding README file",

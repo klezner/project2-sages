@@ -22,6 +22,6 @@ public class UserController {
     @PostMapping
     public ResponseEntity<Long> saveUser(@RequestBody UserDto userDto){
         Long userId = userService.saveUser(userRestMapper.toDomain(userDto));
-        return new ResponseEntity<>(userId,HttpStatus.OK);
+        return new ResponseEntity<>(userId,HttpStatus.CREATED);
     }
 }
