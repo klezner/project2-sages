@@ -16,6 +16,6 @@ public class Quest {
     String repoUrl;
     QuestStatus status;
     QuestDifficulty difficulty;
-    String topic;
+    String content;
 
 }

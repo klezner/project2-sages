@@ -4,8 +4,8 @@ Content-Type: application/json
 
 {
   "questName": "hello-world",
-  "difficulty": "BEGINNER",
-  "topic": "Basic syntax."
+  "content": "Create a class with main method that prints \"Hello World!\" to the console.",
+  "difficulty": "BEGINNER"
 }
 
 ###
