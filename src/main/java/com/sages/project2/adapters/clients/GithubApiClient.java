@@ -1,12 +1,14 @@
 package com.sages.project2.adapters.clients;
 
 import com.sages.project2.commons.FileManager;
+import com.sages.project2.domain.RepositoryAlreadyExitsException;
 import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.*;
 import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Optional;
 
 @Component
 @RequiredArgsConstructor
@@ -22,10 +24,11 @@ public class GithubApiClient {
         }
     }
 
-    public GHRepository createRepository(String repoName) throws IOException {
-        return github.createRepository(repoName)
+    public Optional<GHRepository> createRepository(String repoName) throws IOException {
+
+        return Optional.of(github.createRepository(repoName)
                 .private_(true)
-                .create();
+                .create());
     }
     
     public GHRepository getRepository(String repoName) throws IOException {
