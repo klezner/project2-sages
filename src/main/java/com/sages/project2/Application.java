@@ -15,7 +15,6 @@ import java.io.IOException;
 @SpringBootApplication
 public class Application {
 
-
     public static final String REPO_NAME = "hello-world-2";
     public static final String NEW_BRANCH = "new-branch";
     public static final String ADMIN_GITHUB_NAME = "bartmj";
@@ -46,7 +45,7 @@ public class Application {
         System.out.println("New branch created");
 
         githubAPICLient.changeFileContentOnBranch(repository, NEW_BRANCH, PATH_TO_MAIN, USERS_SOLUTION, "commit message");
-        System.out.println("Users soultion sent to branch new-branch to src/main/java/Main.java");
+        System.out.println("Users solution sent to branch new-branch to src/main/java/Main.java");
 
 
     }
