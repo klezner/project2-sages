@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class HelloWorldREST {
 
-    private static final String text = "hello World";
+    private static final String TEXT = "hello World";
 
     @PreAuthorize("hasRole('ROLE_USER')")
     @GetMapping("/test")
@@ -24,6 +24,6 @@ public class HelloWorldREST {
     }
 
     public String get() {
-        return text;
+        return TEXT;
     }
 }

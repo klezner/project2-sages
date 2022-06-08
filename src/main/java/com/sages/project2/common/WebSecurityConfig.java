@@ -1,7 +1,8 @@
 package com.sages.project2.common;
 
 
-import com.sages.project2.domain.ports.in.UserService;
+import com.sages.project2.adapters.persistence.entities.UserEntity;
+import com.sages.project2.adapters.persistence.repositories.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -16,6 +17,7 @@ import org.springframework.security.web.SecurityFilterChain;
 
 import java.util.HashSet;
 import java.util.Map;
+import java.util.Optional;
 import java.util.Set;
 
 @Configuration
@@ -24,7 +26,9 @@ import java.util.Set;
 @RequiredArgsConstructor
 public class WebSecurityConfig {
 
-    private final UserService userService;
+    private static final String LOGIN_ATTRIBUTE = "login";
+    private static final String ROLE_USER = "ROLE_USER";
+    private final JpaUserRepository jpaUserRepository;
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
@@ -52,19 +56,17 @@ public class WebSecurityConfig {
 
                     Map<String, Object> userAttributes = oauth2UserAuthority.getAttributes();
 
-                    String login = (String) userAttributes.get("login");
-                    if (userService.isAdmin(login)) {
-                        mappedAuthorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(
-                                "ROLE_ADMIN"));
-                    } else {
-                        mappedAuthorities.addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(
-                                "ROLE_USER"));
-                    }
+                    String login = (String) userAttributes.get(LOGIN_ATTRIBUTE);
+
+                    Optional.ofNullable(jpaUserRepository.findByLogin(login))
+                            .ifPresentOrElse(
+                                    user -> mappedAuthorities
+                                            .addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole())),
+                                    () -> jpaUserRepository.save(new UserEntity(login, ROLE_USER)));
                 }
             });
 
             return mappedAuthorities;
         };
     }
-
 }
