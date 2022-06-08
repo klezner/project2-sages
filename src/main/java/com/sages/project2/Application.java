@@ -4,18 +4,16 @@ import com.sages.project2.adapters.clients.GithubApiClient;
 
 import static java.lang.String.format;
 
-import org.kohsuke.github.GHRepository;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.ConfigurableApplicationContext;
 
-import java.io.File;
 import java.io.IOException;
 
 @SpringBootApplication
 public class Application {
 
-    public static final String REPO_NAME = "hello-world-2";
+    public static final String REPO_NAME = "hello-world-0";
     public static final String NEW_BRANCH = "new-branch";
     public static final String ADMIN_GITHUB_NAME = "bartmj";
     private static final String PATH_TO_MAIN = "src/main/java/Main.java";
