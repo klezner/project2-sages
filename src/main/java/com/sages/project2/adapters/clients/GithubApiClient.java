@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Optional;
+
 
 @Component
 @RequiredArgsConstructor
@@ -24,11 +24,11 @@ public class GithubApiClient {
         }
     }
 
-    public Optional<GHRepository> createRepository(String repoName) throws IOException {
 
-        return Optional.of(github.createRepository(repoName)
+    public GHRepository createRepository(String repoName) throws IOException {
+        return github.createRepository(repoName)
                 .private_(true)
-                .create());
+                .create();
     }
     
     public GHRepository getRepository(String repoName) throws IOException {

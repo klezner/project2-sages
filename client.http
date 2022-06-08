@@ -3,7 +3,7 @@ Accept: application/json
 Content-Type: application/json
 
 {
-  "questName": "hello-world-2",
+  "questName": "hello-world-1",
   "content": "Create a class with main method that prints \"Hello World!\" to the console.",
   "difficulty": "BEGINNER"
 }
