@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.*;
 import org.springframework.stereotype.Component;
 
+
 import java.io.File;
 import java.io.IOException;
 
@@ -45,6 +46,11 @@ public class GithubApiClient {
     public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {
         String sha1 = repository.getBranch("main").getSHA1();
         repository.createRef("refs/heads/" + branchName, sha1);
+    }
+
+    public void changeFileContentOnBranch(GHRepository repository, String branchName, String pathToFile, String content, String commitMessage)
+            throws IOException {
+        repository.getFileContent(pathToFile, branchName).update(content, commitMessage, branchName);
     }
 
     public void addFileToBranch(File file,
