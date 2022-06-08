@@ -6,6 +6,7 @@ import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.*;
 import org.springframework.stereotype.Component;
 
+
 import java.io.File;
 import java.io.IOException;
 
@@ -30,7 +31,15 @@ public class GithubApiClient {
                 .private_(true)
                 .create();
     }
-    
+
+    private void createRepoContent(String fileContent, String commitMessage, String filePath, GHRepository ghRepository) throws IOException {
+        ghRepository.createContent()
+                .content(fileContent)
+                .message(commitMessage)
+                .path(filePath)
+                .commit();
+    }
+
     public GHRepository getRepository(String repoName) throws IOException {
         return github.getRepository(repoName);
     }
@@ -38,6 +47,11 @@ public class GithubApiClient {
     public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {
         String sha1 = repository.getBranch("main").getSHA1();
         repository.createRef("refs/heads/" + branchName, sha1);
+    }
+
+    public void changeFileContentOnBranch(GHRepository repository, String branchName, String pathToFile, String content, String commitMessage)
+            throws IOException {
+        repository.getFileContent(pathToFile, branchName).update(content, commitMessage, branchName);
     }
 
     public void addFileToBranch(File file,
@@ -50,6 +64,5 @@ public class GithubApiClient {
                 .message(message)
                 .path(file.getName())
                 .commit();
-
     }
 }

@@ -3,7 +3,6 @@ package com.sages.project2.adapters.rest;
 import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 
-import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.ports.in.QuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
