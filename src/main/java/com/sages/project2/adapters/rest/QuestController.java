@@ -3,6 +3,7 @@ package com.sages.project2.adapters.rest;
 import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 
+import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
 import com.sages.project2.domain.ports.in.QuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -27,7 +28,14 @@ public class QuestController {
 
     @PostMapping("/admin")
     public ResponseEntity<Long> saveQuest(@RequestBody QuestDto questDto) throws IOException {
-        var questId = questService.saveQuest(questRestMapper.toDomain(questDto));
+        Long questId;
+        try {
+            questId = questService.saveQuest(questRestMapper.toDomain(questDto));
+        } catch (RepositoryAlreadyExistsException e) {
+            return ResponseEntity
+                    .status(HttpStatus.CONFLICT)
+                    .build();
+        }
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(questId);

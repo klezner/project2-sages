@@ -33,18 +33,18 @@ public class Application {
         githubAPICLient.connect();
         System.out.println("Github client connected");
 
-        githubAPICLient.createRepository(REPO_NAME);
-        System.out.println("New repository created");
+//        githubAPICLient.createRepository(REPO_NAME);
+//        System.out.println("New repository created");
 
-        var fullRepoName = format("%s/%s", ADMIN_GITHUB_NAME, REPO_NAME);
-
-        var repository = githubAPICLient.getRepository(fullRepoName);
-
-        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
-        System.out.println("New branch created");
-
-        githubAPICLient.changeFileContentOnBranch(repository, NEW_BRANCH, PATH_TO_MAIN, USERS_SOLUTION, "commit message");
-        System.out.println("Users solution sent to branch new-branch to src/main/java/Main.java");
+//        var fullRepoName = format("%s/%s", ADMIN_GITHUB_NAME, REPO_NAME);
+//
+//        var repository = githubAPICLient.getRepository(fullRepoName);
+//
+//        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
+//        System.out.println("New branch created");
+//
+//        githubAPICLient.changeFileContentOnBranch(repository, NEW_BRANCH, PATH_TO_MAIN, USERS_SOLUTION, "commit message");
+//        System.out.println("Users solution sent to branch new-branch to src/main/java/Main.java");
 
 
 //        GHRepository repository = githubAPICLient.createRepository(REPO_NAME,

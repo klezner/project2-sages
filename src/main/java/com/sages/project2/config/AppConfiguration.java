@@ -2,7 +2,7 @@ package com.sages.project2.config;
 
 import com.sages.project2.domain.ports.in.QuestService;
 import com.sages.project2.domain.ports.in.UserService;
-import com.sages.project2.domain.ports.out.GithubApiRepository;
+import com.sages.project2.domain.ports.out.GitClient;
 import com.sages.project2.domain.ports.out.QuestRepository;
 import com.sages.project2.domain.ports.out.UserRepository;
 import com.sages.project2.domain.services.QuestManager;
@@ -15,8 +15,8 @@ public class AppConfiguration {
 
     @Bean
     public QuestService getQuestService(QuestRepository questPersistenceAdapter,
-                                        GithubApiRepository githubApiClient){
-        return new QuestManager(questPersistenceAdapter,githubApiClient);
+                                        GitClient gitClient){
+        return new QuestManager(questPersistenceAdapter,gitClient);
     }
 
     @Bean

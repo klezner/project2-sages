@@ -1,19 +1,22 @@
 package com.sages.project2.adapters.clients;
 
 import com.sages.project2.commons.FileManager;
-import com.sages.project2.domain.ports.out.GithubApiRepository;
+import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
+import com.sages.project2.domain.ports.out.GitClient;
 import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.*;
 import org.springframework.stereotype.Component;
 
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Optional;
 
 
 @Component
 @RequiredArgsConstructor
-public class GithubApiClient implements GithubApiRepository {
+public class GithubApiClient implements GitClient {
 
     private static final String ADMIN_GH_LOGIN = "bartmj";
 
@@ -28,17 +31,24 @@ public class GithubApiClient implements GithubApiRepository {
     }
 
     public String createRepository(String repoName) throws IOException {
-        if (getRepository(repoName) == null) {
-            var repo =  github.createRepository(repoName)
-                    .private_(true)
-                    .create();
-            return repo.getHtmlUrl().toString();
+        var repository = getRepository(repoName);
+        if (repository.isPresent()) {
+            throw new RepositoryAlreadyExistsException();
         }
-        return null;
+        var repo = github.createRepository(repoName)
+                .private_(true)
+                .create();
+        return repo.getHtmlUrl().toString();
     }
 
-    public GHRepository getRepository(String repoName) throws IOException {
-        return github.getRepository(ADMIN_GH_LOGIN + "/" + repoName);
+    public Optional<GHRepository> getRepository(String repoName) throws IOException {
+        GHRepository ghRepository;
+        try {
+            ghRepository = github.getRepository(ADMIN_GH_LOGIN + "/" + repoName);
+            return Optional.of(ghRepository);
+        } catch (FileNotFoundException e) {
+            return Optional.empty();
+        }
     }
 
     public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {
