@@ -1,7 +1,7 @@
 package com.sages.project2.adapters.clients;
 
 import com.sages.project2.commons.FileManager;
-import com.sages.project2.domain.RepositoryAlreadyExitsException;
+import com.sages.project2.domain.ports.out.GithubApiRepository;
 import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.*;
 import org.springframework.stereotype.Component;
@@ -13,7 +13,9 @@ import java.io.IOException;
 
 @Component
 @RequiredArgsConstructor
-public class GithubApiClient {
+public class GithubApiClient implements GithubApiRepository {
+
+    private static final String ADMIN_GH_LOGIN = "bartmj";
 
     private GitHub github;
 
@@ -25,14 +27,18 @@ public class GithubApiClient {
         }
     }
 
-    public GHRepository createRepository(String repoName) throws IOException {
-        return github.createRepository(repoName)
-                .private_(true)
-                .create();
+    public String createRepository(String repoName) throws IOException {
+        if (getRepository(repoName) == null) {
+            var repo =  github.createRepository(repoName)
+                    .private_(true)
+                    .create();
+            return repo.getHtmlUrl().toString();
+        }
+        return null;
     }
 
     public GHRepository getRepository(String repoName) throws IOException {
-        return github.getRepository(repoName);
+        return github.getRepository(ADMIN_GH_LOGIN + "/" + repoName);
     }
 
     public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {

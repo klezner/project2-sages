@@ -13,7 +13,8 @@ import java.io.IOException;
 @SpringBootApplication
 public class Application {
 
-    public static final String REPO_NAME = "hello-world-0";
+
+    public static final String REPO_NAME = "hello-world";
     public static final String NEW_BRANCH = "new-branch";
     public static final String ADMIN_GITHUB_NAME = "bartmj";
     private static final String PATH_TO_MAIN = "src/main/java/Main.java";
@@ -44,6 +45,26 @@ public class Application {
 
         githubAPICLient.changeFileContentOnBranch(repository, NEW_BRANCH, PATH_TO_MAIN, USERS_SOLUTION, "commit message");
         System.out.println("Users solution sent to branch new-branch to src/main/java/Main.java");
+
+
+//        GHRepository repository = githubAPICLient.createRepository(REPO_NAME,
+//                "Readme file content",
+//                "This commit is adding README file",
+//                "README.md");
+//        System.out.println("New repository committed with README.md");
+//
+//        githubAPICLient.createBranchOnRepository(repository, NEW_BRANCH);
+//        System.out.println("New branch created");
+//
+//        githubAPICLient.addFileToBranch(new File("src/main/java/com/sages/project2/WebSecurityConfig.java"),
+//                repository,
+//                NEW_BRANCH,
+//                "New java file added to branch");
+//
+//        System.out.println("File added to the branch");
+//
+//        var repoFromGitHub = githubAPICLient.getRepository(repository.getFullName());
+//        System.out.println("Repo from GitHub: " + repoFromGitHub.getFullName());
 
 
     }

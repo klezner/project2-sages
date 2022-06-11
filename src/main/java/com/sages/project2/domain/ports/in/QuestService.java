@@ -6,5 +6,5 @@ import java.io.IOException;
 
 public interface QuestService {
 
-     Quest saveQuest(Quest quest) throws IOException;
+     Long saveQuest(Quest quest) throws IOException;
 }

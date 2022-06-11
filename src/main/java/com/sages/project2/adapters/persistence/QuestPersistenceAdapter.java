@@ -22,9 +22,8 @@ public class QuestPersistenceAdapter implements QuestRepository {
     private final QuestPersistenceMapper questMapper;
 
     @Override
-    public Quest saveQuest(Quest quest) {
+    public Long saveQuest(Quest quest) {
         var entity = questMapper.toEntity(quest);
-        var savedQuest =  questRepository.save(entity);
-        return questMapper.toDomain(savedQuest);
+        return questRepository.save(entity).getId();
     }
 }
