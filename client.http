@@ -1,4 +1,4 @@
-POST http://localhost:9090/quests/admin
+POST http://localhost:8090/quests/admin
 Accept: application/json
 Content-Type: application/json
 
