@@ -1,12 +1,9 @@
 package com.sages.project2.config;
 
 import com.sages.project2.domain.ports.in.QuestService;
-import com.sages.project2.domain.ports.in.UserService;
 import com.sages.project2.domain.ports.out.GitClient;
 import com.sages.project2.domain.ports.out.QuestRepository;
-import com.sages.project2.domain.ports.out.UserRepository;
 import com.sages.project2.domain.services.QuestManager;
-import com.sages.project2.domain.services.UserServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -18,11 +15,5 @@ public class AppConfiguration {
                                         GitClient gitClient){
         return new QuestManager(questPersistenceAdapter,gitClient);
     }
-
-    @Bean
-    public UserService getUserService(UserRepository userPersistenceAdapter){
-        return new UserServiceImpl(userPersistenceAdapter);
-    }
-
 
 }

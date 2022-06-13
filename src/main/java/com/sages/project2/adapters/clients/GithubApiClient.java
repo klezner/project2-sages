@@ -18,7 +18,10 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GithubApiClient implements GitClient {
 
-    private static final String ADMIN_GH_LOGIN = "bartmj";
+    // admin username może być do wyjęcia z security context
+    private static final String ADMIN_GH_LOGIN = "gh_admin_username";
+    // klasa, do której trafiają rozwiązania użytkownika
+    public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
 
     private GitHub github;
 
@@ -56,9 +59,9 @@ public class GithubApiClient implements GitClient {
         repository.createRef("refs/heads/" + branchName, sha1);
     }
 
-    public void changeFileContentOnBranch(GHRepository repository, String branchName, String pathToFile, String content, String commitMessage)
+    public void changeFileContentOnBranch(GHRepository repository, String branchName, String content, String commitMessage)
             throws IOException {
-        repository.getFileContent(pathToFile, branchName).update(content, commitMessage, branchName);
+        repository.getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
     }
 
     public void addFileToBranch(File file,
