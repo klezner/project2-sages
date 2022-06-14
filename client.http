@@ -1,0 +1,27 @@
+POST http://localhost:8090/quests/admin
+Accept: application/json
+Content-Type: application/json
+
+{
+  "questName": "hello-world",
+  "content": "Create a class with main method that prints \"Hello World!\" to the console.",
+  "difficulty": "BEGINNER"
+}
+
+###
+POST http://localhost:9090/users
+Accept: application/json
+Content-Type: application/json
+
+{
+
+  "login": "Johnny",
+  "role": "user"
+
+}
+
+###
+
+DELETE https://api.github.com/repos/${user}/${nazwa-repo}
+Accept: application/vnd.github.v3+json
+Authorization: Bearer token_do_usuwania_repo
