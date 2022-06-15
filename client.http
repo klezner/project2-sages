@@ -21,7 +21,20 @@ Content-Type: application/json
 }
 
 ###
+POST http://localhost:8090/solutions
+Accept: application/json
+Content-Type: application/json
 
+{
+  "userId": 1,
+  "username": "Johhny",
+  "questId": 1,
+  "solution": "public class Main { public static void main(String[] args) { System.out.print(\"Hello World!\"); } }",
+  "result": null
+
+}
+
+###
 DELETE https://api.github.com/repos/${user}/${nazwa-repo}
 Accept: application/vnd.github.v3+json
 Authorization: Bearer token_do_usuwania_repo
