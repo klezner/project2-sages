@@ -24,6 +24,7 @@ public class SolutionPersistenceAdapter implements SolutionRepository {
     @Override
     public Solution saveSolution(Solution solution) throws IOException {
         var solutionEntity = solutionPersistenceMapper.toEntity(solution);
-        return solutionPersistenceMapper.toDomain(jpaSolutionRepository.saveSolution(solutionEntity));
+        var solutionEntityFromDb = jpaSolutionRepository.saveSolution(solutionEntity);
+        return solutionPersistenceMapper.toDomain(solutionEntityFromDb);
     }
 }

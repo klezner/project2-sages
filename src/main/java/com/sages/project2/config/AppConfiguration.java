@@ -1,7 +1,7 @@
 package com.sages.project2.config;
 
 import com.sages.project2.domain.ports.in.QuestService;
-import com.sages.project2.domain.ports.out.DockerClient;
+import com.sages.project2.domain.ports.out.DockerApiClient;
 import com.sages.project2.domain.ports.out.GitClient;
 import com.sages.project2.domain.ports.out.QuestRepository;
 import com.sages.project2.domain.ports.out.SolutionRepository;
@@ -14,7 +14,7 @@ public class AppConfiguration {
 
     @Bean
     public QuestService getQuestService(QuestRepository questPersistenceAdapter,
-                                        GitClient gitClient, DockerClient dockerClient,
+                                        GitClient gitClient, DockerApiClient dockerClient,
                                         SolutionRepository solutionRepository) {
         return new QuestManager(questPersistenceAdapter, gitClient, dockerClient, solutionRepository);
     }

@@ -3,18 +3,17 @@ package com.sages.project2.adapters.persistence.entities;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
+@EqualsAndHashCode(of = "id")
 @NoArgsConstructor
 @Table(name = "solutions")
 public class SolutionEntity {
+
     @Id
     private String login;
     private Long userId;
@@ -22,4 +21,5 @@ public class SolutionEntity {
     private Long questId;
     private String solution;
     private boolean result;
+
 }

@@ -6,10 +6,12 @@ import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.models.Solution;
 import com.sages.project2.domain.ports.in.QuestService;
 import com.sages.project2.domain.ports.in.SolutionService;
-import com.sages.project2.domain.ports.out.DockerClient;
+import com.sages.project2.domain.ports.out.DockerApiClient;
 import com.sages.project2.domain.ports.out.GitClient;
 import com.sages.project2.domain.ports.out.QuestRepository;
 import com.sages.project2.domain.ports.out.SolutionRepository;
+import com.spotify.docker.client.exceptions.DockerCertificateException;
+import com.spotify.docker.client.exceptions.DockerException;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
@@ -19,7 +21,7 @@ public class QuestManager implements QuestService, SolutionService {
 
     private final QuestRepository questRepository;
     private final GitClient gitClient;
-    private final DockerClient dockerClient;
+    private final DockerApiClient dockerClient;
     private final SolutionRepository solutionRepository;
 
     @Atomic
@@ -40,7 +42,12 @@ public class QuestManager implements QuestService, SolutionService {
         var questName = quest.getQuestName();
 
         gitClient.changeFileContentOnBranch(questName, username, solution.getSolution(), "Commited by: " + username);
-        String checkedSolution = dockerClient.checkSolution(questName, username);
+        String checkedSolution = null;
+        try {
+            checkedSolution = dockerClient.checkSolution(questName, username);
+        } catch (DockerCertificateException | InterruptedException | DockerException e) {
+            e.printStackTrace();
+        }
 
         if (checkedSolution.contains("SUCCESS")) {
             solution.setResult(true);
