@@ -8,17 +8,18 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-
 @Entity
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "users")
-public class UserEntity {
-
+@Table(name = "solutions")
+public class SolutionEntity {
     @Id
     private String login;
-    private String role;
-
+    private Long userId;
+    private String username;
+    private Long questId;
+    private String solution;
+    private boolean result;
 }

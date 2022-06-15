@@ -2,6 +2,7 @@ package com.sages.project2.adapters.clients;
 
 import com.sages.project2.commons.FileManager;
 import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
+import com.sages.project2.domain.exceptions.RepositoryDoesNotExistException;
 import com.sages.project2.domain.ports.out.GitClient;
 import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.*;
@@ -19,7 +20,7 @@ import java.util.Optional;
 public class GithubApiClient implements GitClient {
 
     // admin username może być do wyjęcia z security context
-    private static final String ADMIN_GH_LOGIN = "gh_admin_username";
+    private static final String ADMIN_GH_LOGIN = "bartmj";
     // klasa, do której trafiają rozwiązania użytkownika
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
 
@@ -59,9 +60,15 @@ public class GithubApiClient implements GitClient {
         repository.createRef("refs/heads/" + branchName, sha1);
     }
 
-    public void changeFileContentOnBranch(GHRepository repository, String branchName, String content, String commitMessage)
+    public void changeFileContentOnBranch(String repoName, String branchName,
+                                          String content, String commitMessage)
             throws IOException {
-        repository.getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
+        var repository = getRepository(repoName);
+        if (repository.isPresent()) {
+            repository.get().getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
+        } else {
+            throw new RepositoryDoesNotExistException();
+        }
     }
 
     public void addFileToBranch(File file,

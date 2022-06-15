@@ -6,4 +6,6 @@ public interface QuestRepository {
 
     Long saveQuest(Quest quest);
 
+    Quest getQuest(Long id);
+
 }
