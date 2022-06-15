@@ -38,14 +38,19 @@ public class QuestManager implements QuestService, SolutionService {
         var username = solution.getUsername();
         var quest = questRepository.getQuest(questId);
         var questName = quest.getQuestName();
+
         gitClient.changeFileContentOnBranch(questName, username, solution.getSolution(), "Commited by: " + username);
-        var checkSolution = dockerClient.checkSolution(questName, username);
-        if (checkSolution.contains("SUCCESS")) {
+        String checkedSolution = dockerClient.checkSolution(questName, username);
+
+        if (checkedSolution.contains("SUCCESS")) {
             solution.setResult(true);
         } else {
             solution.setResult(false);
+
         }
-        return solutionRepository.saveSolution(solution);
+
+        solutionRepository.saveSolution(solution);
+        return solution;
     }
 }
 
