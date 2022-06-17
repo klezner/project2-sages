@@ -3,6 +3,7 @@ package com.sages.project2.adapters.persistence;
 
 import com.sages.project2.adapters.persistence.mappers.QuestPersistenceMapper;
 import com.sages.project2.adapters.persistence.repositories.JpaQuestRepository;
+import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.ports.out.QuestRepository;
 import lombok.RequiredArgsConstructor;
@@ -31,8 +32,13 @@ public class QuestPersistenceAdapter implements QuestRepository {
     @Override
     public List<Quest> findAllQuests() {
         var entities = questRepository.findAll();
-        var quests = questMapper.toDomain(entities);
-        return quests;
+        return questMapper.toDomain(entities);
+    }
+
+    @Override
+    public List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty) {
+        var entities = questRepository.findAllByDifficulty(difficulty);
+        return questMapper.toDomain(entities);
     }
 
 }

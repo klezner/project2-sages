@@ -1,6 +1,7 @@
 package com.sages.project2.domain.services;
 
 import com.sages.project2.commons.aop.Atomic;
+import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
 import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.ports.in.QuestService;
@@ -32,6 +33,12 @@ public class QuestManager implements QuestService {
     @Override
     public List<Quest> findAllQuests() {
         return questRepository.findAllQuests();
+    }
+
+    @Atomic
+    @Override
+    public List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty) {
+        return questRepository.findAllQuestsByDifficulty(difficulty);
     }
 
 }

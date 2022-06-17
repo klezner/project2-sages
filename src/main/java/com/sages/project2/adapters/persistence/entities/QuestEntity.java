@@ -19,9 +19,9 @@ public class QuestEntity {
     private Long id;
     private String questName;
     private String repoUrl;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private QuestStatus status;
-    @Enumerated(EnumType.ORDINAL)
+    @Enumerated(EnumType.STRING)
     private QuestDifficulty difficulty;
     private String content;
 

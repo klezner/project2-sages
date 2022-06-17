@@ -2,7 +2,9 @@ package com.sages.project2.adapters.rest;
 
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
+import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
+import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.ports.in.QuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
@@ -37,8 +39,13 @@ public class QuestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<QuestDto>> getQuests() {
-        var quests = questService.findAllQuests();
+    public ResponseEntity<List<QuestDto>> getQuests(@RequestParam(required = false) String difficulty) {
+        List<Quest> quests;
+        if (difficulty != null) {
+            quests = questService.findAllQuestsByDifficulty(QuestDifficulty.valueOf(difficulty.toUpperCase()));
+        } else {
+            quests = questService.findAllQuests();
+        }
         var dtos = questRestMapper.toDto(quests);
         return ResponseEntity
                 .status(HttpStatus.OK)
