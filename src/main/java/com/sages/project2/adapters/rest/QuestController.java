@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
+import java.util.List;
 
 @RestController
 @RequestMapping("/quests")
@@ -36,10 +37,12 @@ public class QuestController {
     }
 
     @GetMapping
-    public ResponseEntity<Long> getQuests() {
+    public ResponseEntity<List<QuestDto>> getQuests() {
+        var quests = questService.findAllQuests();
+        var dtos = questRestMapper.toDto(quests);
         return ResponseEntity
                 .status(HttpStatus.OK)
-                .build();
+                .body(dtos);
     }
 
 }

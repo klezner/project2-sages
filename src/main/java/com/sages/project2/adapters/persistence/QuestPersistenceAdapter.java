@@ -9,6 +9,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 
@@ -26,4 +27,12 @@ public class QuestPersistenceAdapter implements QuestRepository {
         var entity = questMapper.toEntity(quest);
         return questRepository.save(entity).getId();
     }
+
+    @Override
+    public List<Quest> findAllQuests() {
+        var entities = questRepository.findAll();
+        var quests = questMapper.toDomain(entities);
+        return quests;
+    }
+
 }
