@@ -1,6 +1,7 @@
 package com.sages.project2.adapters.clients;
 
 import com.sages.project2.commons.FileManager;
+import com.sages.project2.domain.exceptions.BranchDoesNotExistException;
 import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
 import com.sages.project2.domain.exceptions.RepositoryDoesNotExistException;
 import com.sages.project2.domain.ports.out.GitClient;
@@ -45,6 +46,11 @@ public class GithubApiClient implements GitClient {
         return repo.getHtmlUrl().toString();
     }
 
+    public GHBranch checkIfGithubBranchExists(String repoName, String branchName) throws IOException {
+        return Optional.of(github.getRepository(ADMIN_GH_LOGIN + "/" + repoName).getBranch(branchName))
+                .orElseThrow(BranchDoesNotExistException::new);
+    }
+
     public Optional<GHRepository> getRepository(String repoName) throws IOException {
         GHRepository ghRepository;
         try {
@@ -55,7 +61,8 @@ public class GithubApiClient implements GitClient {
         }
     }
 
-    public void createBranchOnRepository(GHRepository repository, String branchName) throws IOException {
+    public void createBranchOnRepository(String repoName, String branchName) throws IOException {
+        var repository = getRepository(repoName).get();
         String sha1 = repository.getBranch("main").getSHA1();
         repository.createRef("refs/heads/" + branchName, sha1);
     }

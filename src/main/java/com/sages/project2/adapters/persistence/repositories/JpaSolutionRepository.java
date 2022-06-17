@@ -5,6 +5,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface JpaSolutionRepository extends JpaRepository<SolutionEntity, Long> {
 
-    SolutionEntity saveSolution(SolutionEntity solutionEntity);
+//    SolutionEntity save(SolutionEntity solutionEntity);
 
 }
