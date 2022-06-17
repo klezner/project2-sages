@@ -1,21 +1,15 @@
 package com.sages.project2.adapters.rest;
 
-import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
-
+import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
 import com.sages.project2.domain.ports.in.QuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.scheduling.annotation.Async;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
-import java.util.concurrent.CompletableFuture;
 
 @RestController
 @RequestMapping("/quests")
@@ -40,6 +34,14 @@ public class QuestController {
                 .status(HttpStatus.CREATED)
                 .body(questId);
     }
+
+    @GetMapping
+    public ResponseEntity<Long> getQuests() {
+        return ResponseEntity
+                .status(HttpStatus.OK)
+                .build();
+    }
+
 }
 
 
