@@ -39,10 +39,10 @@ public class QuestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<QuestDto>> getQuests(@RequestParam(required = false) String difficulty) {
+    public ResponseEntity<List<QuestDto>> getQuests(@RequestParam(required = false) QuestDifficulty difficulty) {
         List<Quest> quests;
         if (difficulty != null) {
-            quests = questService.findAllQuestsByDifficulty(QuestDifficulty.valueOf(difficulty.toUpperCase()));
+            quests = questService.findAllQuestsByDifficulty(difficulty);
         } else {
             quests = questService.findAllQuests();
         }
