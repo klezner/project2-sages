@@ -1,7 +1,6 @@
 package com.sages.project2.adapters.clients;
 
 import com.sages.project2.commons.FileManager;
-import com.sages.project2.domain.exceptions.BranchDoesNotExistException;
 import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
 import com.sages.project2.domain.exceptions.RepositoryDoesNotExistException;
 import com.sages.project2.domain.ports.out.GitClient;
@@ -46,16 +45,17 @@ public class GithubApiClient implements GitClient {
         return repo.getHtmlUrl().toString();
     }
 
-    public GHBranch checkIfGithubBranchExists(String repoName, String branchName) throws IOException {
-        return Optional.of(github.getRepository(ADMIN_GH_LOGIN + "/" + repoName).getBranch(branchName))
-                .orElseThrow(BranchDoesNotExistException::new);
+    public Optional<GHBranch> getGithubBranch(String repoName, String branchName) throws IOException {
+        try {
+            return Optional.of(github.getRepository(ADMIN_GH_LOGIN + "/" + repoName).getBranch(branchName));
+        } catch (FileNotFoundException e) {
+            return Optional.empty();
+        }
     }
 
     public Optional<GHRepository> getRepository(String repoName) throws IOException {
-        GHRepository ghRepository;
         try {
-            ghRepository = github.getRepository(ADMIN_GH_LOGIN + "/" + repoName);
-            return Optional.of(ghRepository);
+            return Optional.of(github.getRepository(ADMIN_GH_LOGIN + "/" + repoName));
         } catch (FileNotFoundException e) {
             return Optional.empty();
         }
@@ -65,6 +65,11 @@ public class GithubApiClient implements GitClient {
         var repository = getRepository(repoName).get();
         String sha1 = repository.getBranch("main").getSHA1();
         repository.createRef("refs/heads/" + branchName, sha1);
+    }
+
+    @Override
+    public Optional<GHBranch> checkIfGithubBranchExists(String repoName, String branchName) throws IOException {
+        return Optional.empty();
     }
 
     public void changeFileContentOnBranch(String repoName, String branchName,

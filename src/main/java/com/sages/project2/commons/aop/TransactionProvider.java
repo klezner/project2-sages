@@ -11,7 +11,6 @@ import org.springframework.transaction.TransactionDefinition;
 import org.springframework.transaction.support.DefaultTransactionDefinition;
 
 @Aspect
-@Component
 @RequiredArgsConstructor
 public class TransactionProvider {
 
