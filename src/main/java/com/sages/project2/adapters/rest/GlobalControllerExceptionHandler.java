@@ -12,7 +12,7 @@ public class GlobalControllerExceptionHandler {
 
     @ExceptionHandler(ConversionFailedException.class)
     public ResponseEntity<ExceptionDto> onConversionFailedException(ConversionFailedException exception) {
-        String description = "Invalid value for the difficulty parameter";
+        String description = "Invalid value[s] for the parameter[s]";
         return ResponseEntity
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ExceptionDto(description));

@@ -41,6 +41,18 @@ public class QuestManager implements QuestService {
         return questRepository.findAllQuestsByDifficulty(difficulty);
     }
 
+    @Atomic
+    @Override
+    public List<Quest> findAllQuestsByStatus(QuestStatus status) {
+        return questRepository.findAllQuestsByStatus(status);
+    }
+
+    @Atomic
+    @Override
+    public List<Quest> findAllQuestsByDifficultyAndStatus(QuestDifficulty difficulty, QuestStatus status) {
+        return questRepository.findAllQuestsByDifficultyAndStatus(difficulty, status);
+    }
+
 }
 
 
