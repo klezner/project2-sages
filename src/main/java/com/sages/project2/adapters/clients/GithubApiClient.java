@@ -26,7 +26,7 @@ public class GithubApiClient implements GitClient {
     private static final String ADMIN_GH_LOGIN = "codequest504";
     // klasa, do której trafiają rozwiązania użytkownika
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
-    public static final String DELETE_TOKEN = "";
+    public static final String DELETE_TOKEN = "token";
 
     private GitHub github;
 
