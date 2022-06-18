@@ -48,6 +48,19 @@ public class GithubApiClient implements GitClient {
         return repo.getHtmlUrl().toString();
     }
 
+    public void createRepoContent(String fileContent, String commitMessage, String filePath, String repoName) throws IOException {
+        var repository = getRepository(repoName);
+        if (repository.isPresent()) {
+            repository.get()
+                    .createContent()
+                    .content(fileContent)
+                    .message(commitMessage)
+                    .path(filePath)
+                    .commit();
+        }
+        throw new RepositoryDoesNotExistException();
+    }
+
     public Optional<GHBranch> getGithubBranch(String repoName, String branchName) throws IOException {
         try {
             return Optional.of(github.getRepository(ADMIN_GH_LOGIN + "/" + repoName).getBranch(branchName));
@@ -113,7 +126,7 @@ public class GithubApiClient implements GitClient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
-        connection.setRequestProperty("Authorization","Bearer "+"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");
+        connection.setRequestProperty("Authorization", "Bearer " + "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");
         connection.setRequestMethod("DELETE");
 
         var responseMessage = connection.getResponseMessage();

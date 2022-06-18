@@ -29,13 +29,16 @@ class GithubApiClientTest {
     void contextLoads() {
     }
 
-    @BeforeAll
-    void beforeAll() throws IOException {
-        githubApiClient.connect();
-        githubApiClient.createRepository(HELLO_WORLD);
-        githubApiClient.createBranchOnRepository(HELLO_WORLD, "main");
-    }
-//
+//    @BeforeAll
+//    void beforeAll() throws IOException {
+//        githubApiClient.connect();
+//        githubApiClient.createRepository(HELLO_WORLD);
+//        githubApiClient.createRepoContent("Readme file content",
+//                "This commit is adding README file",
+//                "README.md", HELLO_WORLD);
+//        githubApiClient.createBranchOnRepository(HELLO_WORLD, "main");
+//    }
+
 //    @AfterAll
 //    void afterAll() throws IOException {
 //        githubApiClient.deleteRepo(HELLO_WORLD);
