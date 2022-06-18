@@ -12,6 +12,8 @@ import org.springframework.stereotype.Component;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Optional;
 
 
@@ -23,6 +25,7 @@ public class GithubApiClient implements GitClient {
     private static final String ADMIN_GH_LOGIN = "bartmj";
     // klasa, do której trafiają rozwiązania użytkownika
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
+    public static final String GH_DELETE_TOKEN = "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";
 
     private GitHub github;
 
@@ -77,9 +80,18 @@ public class GithubApiClient implements GitClient {
             throws IOException {
         var repository = getRepository(repoName);
         if (repository.isPresent()) {
-            repository.get().getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
+            createBranchIfNotExist(repoName, branchName, content, commitMessage, repository);
         } else {
             throw new RepositoryDoesNotExistException();
+        }
+    }
+
+    private void createBranchIfNotExist(String repoName, String branchName, String content, String commitMessage, Optional<GHRepository> repository) throws IOException {
+        var branch = getGithubBranch(repoName, branchName);
+        if (branch.isPresent()) {
+            repository.get().getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
+        } else {
+            createBranchOnRepository(repoName, branchName);
         }
     }
 
@@ -93,5 +105,20 @@ public class GithubApiClient implements GitClient {
                 .message(message)
                 .path(file.getName())
                 .commit();
+    }
+
+    public String deleteRepo(String helloWorld) throws IOException {
+        URL url = new URL("https://api.github.com/repos/" + ADMIN_GH_LOGIN + "/" + helloWorld);
+
+        HttpURLConnection connection = (HttpURLConnection) url.openConnection();
+
+        connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
+        connection.setRequestProperty("Authorization","Bearer "+"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");
+        connection.setRequestMethod("DELETE");
+
+        var responseMessage = connection.getResponseMessage();
+        connection.disconnect();
+        System.out.println("Repo deleted");
+        return responseMessage;
     }
 }

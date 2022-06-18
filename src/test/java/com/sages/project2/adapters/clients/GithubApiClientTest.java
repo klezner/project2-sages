@@ -1,9 +1,6 @@
 package com.sages.project2.adapters.clients;
 
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.DisplayName;
-import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInstance;
+import org.junit.jupiter.api.*;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.kohsuke.github.GHBranch;
 import org.kohsuke.github.GHRepository;
@@ -23,6 +20,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class GithubApiClientTest {
 
+    public static final String HELLO_WORLD = "hello-world-123456789";
+
     @Autowired
     private GithubApiClient githubApiClient;
 
@@ -31,13 +30,20 @@ class GithubApiClientTest {
     }
 
     @BeforeAll
-    void GivenRightUserCredentials_ShouldConnectToGhApiClient() {
+    void beforeAll() throws IOException {
         githubApiClient.connect();
+        githubApiClient.createRepository(HELLO_WORLD);
+        githubApiClient.createBranchOnRepository(HELLO_WORLD, "main");
     }
+//
+//    @AfterAll
+//    void afterAll() throws IOException {
+//        githubApiClient.deleteRepo(HELLO_WORLD);
+//    }
 
     @Test
     void GivenHelloWorldRepoExistsOnGh_getRepository_shouldReturnPresentOptionalOfGhRepo() throws IOException {
-        var repository = githubApiClient.getRepository("hello-world");
+        var repository = githubApiClient.getRepository(HELLO_WORLD);
         assertInstanceOf(GHRepository.class, repository.get());
     }
 
@@ -49,13 +55,13 @@ class GithubApiClientTest {
 
     @Test
     void givenHelloWorldRepoExistsOnGhAndBranchExists_getGithubBranch_shouldReturnPresentOptional() throws IOException {
-        var branch = githubApiClient.getGithubBranch("hello-world", "main");
+        var branch = githubApiClient.getGithubBranch(HELLO_WORLD, "main");
         assertInstanceOf(GHBranch.class, branch.get());
     }
 
     @Test
     void givenHelloWorldRepoExistsOnGhAndBranchDoesNot_getGithubBranch_shouldReturnEmptyOptional() throws IOException {
-        var branch = githubApiClient.getGithubBranch("hello-world", "!@#$%^&*");
+        var branch = githubApiClient.getGithubBranch(HELLO_WORLD, "!@#$%^&*");
         assertTrue(branch.isEmpty());
     }
 
