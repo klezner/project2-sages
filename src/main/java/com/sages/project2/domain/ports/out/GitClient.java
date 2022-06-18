@@ -9,7 +9,7 @@ public interface GitClient {
 
     public void createBranchOnRepository(String repoName, String branchName) throws IOException;
 
-    public Optional<GHBranch> checkIfGithubBranchExists(String repoName, String branchName) throws IOException;
+    public boolean checkIfGithubBranchExists(String repoName, String branchName) throws IOException;
 
     String createRepository(String repoName) throws IOException;
 

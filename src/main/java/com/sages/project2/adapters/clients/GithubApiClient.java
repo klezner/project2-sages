@@ -1,6 +1,8 @@
 package com.sages.project2.adapters.clients;
 
 import com.sages.project2.commons.FileManager;
+import com.sages.project2.domain.exceptions.BranchAlreadyExistsException;
+import com.sages.project2.domain.exceptions.BranchDoesNotExistException;
 import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
 import com.sages.project2.domain.exceptions.RepositoryDoesNotExistException;
 import com.sages.project2.domain.ports.out.GitClient;
@@ -60,7 +62,6 @@ public class GithubApiClient implements GitClient {
         } else {
             throw new RepositoryDoesNotExistException();
         }
-
     }
 
     public Optional<GHBranch> getGithubBranch(String repoName, String branchName) throws IOException {
@@ -80,14 +81,30 @@ public class GithubApiClient implements GitClient {
     }
 
     public void createBranchOnRepository(String repoName, String branchName) throws IOException {
+        if (checkIfGithubBranchExists(repoName, branchName)) {
+            throw new BranchAlreadyExistsException();
+        }
         var repository = getRepository(repoName).get();
         String sha1 = repository.getBranch("main").getSHA1();
         repository.createRef("refs/heads/" + branchName, sha1);
     }
 
     @Override
-    public Optional<GHBranch> checkIfGithubBranchExists(String repoName, String branchName) throws IOException {
-        return Optional.empty();
+    public boolean checkIfGithubBranchExists(String repoName, String branchName) throws IOException {
+        try {
+            getRepository(repoName).get().getBranch(branchName);
+            return true;
+        } catch (FileNotFoundException e) {
+            return false;
+        }
+    }
+
+    public Optional<GHContent> getFileContentOnBranch(String repoName, String branchName) throws IOException {
+        try {
+            return Optional.of(getRepository(repoName).get().getFileContent(PATH_TO_MAIN_CLASS, branchName));
+        } catch (FileNotFoundException e) {
+            return Optional.empty();
+        }
     }
 
     public void changeFileContentOnBranch(String repoName, String branchName,
@@ -95,33 +112,18 @@ public class GithubApiClient implements GitClient {
             throws IOException {
         var repository = getRepository(repoName);
         if (repository.isPresent()) {
-            createBranchIfNotExist(repoName, branchName, content, commitMessage, repository);
+            var branchExists = checkIfGithubBranchExists(repoName, branchName);
+            if (branchExists) {
+                repository.get().getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
+            } else {
+                throw new BranchDoesNotExistException();
+            }
         } else {
             throw new RepositoryDoesNotExistException();
         }
     }
 
-    private void createBranchIfNotExist(String repoName, String branchName, String content, String commitMessage, Optional<GHRepository> repository) throws IOException {
-        var branch = getGithubBranch(repoName, branchName);
-        if (branch.isPresent()) {
-            repository.get().getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
-        } else {
-            createBranchOnRepository(repoName, branchName);
-        }
-    }
-
-    public void addFileToBranch(File file,
-                                GHRepository repository,
-                                String branchName,
-                                String message) throws IOException {
-        repository.createContent()
-                .branch(branchName)
-                .content(FileManager.readfileAsBytes(file))
-                .message(message)
-                .path(file.getName())
-                .commit();
-    }
-
+    // Jaki zastosować wzorzec projektowy do dodania tej funkcji z innej bajki do klasy
     public String deleteRepo(String helloWorld) throws IOException {
         URL url = new URL("https://api.github.com/repos/" + ADMIN_GH_LOGIN + "/" + helloWorld);
 
@@ -135,5 +137,17 @@ public class GithubApiClient implements GitClient {
         connection.disconnect();
         System.out.println("Repo deleted");
         return responseMessage;
+    }
+
+    public void addFileToBranch(File file,
+                                GHRepository repository,
+                                String branchName,
+                                String message) throws IOException {
+        repository.createContent()
+                .branch(branchName)
+                .content(FileManager.readfileAsBytes(file))
+                .message(message)
+                .path(file.getName())
+                .commit();
     }
 }
