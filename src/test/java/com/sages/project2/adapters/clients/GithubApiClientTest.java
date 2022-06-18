@@ -18,7 +18,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class GithubApiClientTest {
 
-    public static final String HELLO_WORLD = "hello-world-123456789";
+    public static final String HELLO_WORLD = "hello-world";
 
     @Autowired
     private GithubApiClient githubApiClient;
