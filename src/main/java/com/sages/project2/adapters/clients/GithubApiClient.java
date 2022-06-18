@@ -25,7 +25,7 @@ public class GithubApiClient implements GitClient {
     private static final String ADMIN_GH_LOGIN = "bartmj";
     // klasa, do której trafiają rozwiązania użytkownika
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
-    public static final String GH_DELETE_TOKEN = "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";
+    public static final String DELETE_TOKEN = "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";
 
     private GitHub github;
 
@@ -48,7 +48,7 @@ public class GithubApiClient implements GitClient {
         return repo.getHtmlUrl().toString();
     }
 
-    public void createRepoContent(String fileContent, String commitMessage, String filePath, String repoName) throws IOException {
+    public void createRepoContent(String repoName, String fileContent, String commitMessage, String filePath) throws IOException {
         var repository = getRepository(repoName);
         if (repository.isPresent()) {
             repository.get()
@@ -57,8 +57,10 @@ public class GithubApiClient implements GitClient {
                     .message(commitMessage)
                     .path(filePath)
                     .commit();
+        } else {
+            throw new RepositoryDoesNotExistException();
         }
-        throw new RepositoryDoesNotExistException();
+
     }
 
     public Optional<GHBranch> getGithubBranch(String repoName, String branchName) throws IOException {
@@ -126,7 +128,7 @@ public class GithubApiClient implements GitClient {
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
         connection.setRequestProperty("Accept", "application/vnd.github.v3+json");
-        connection.setRequestProperty("Authorization", "Bearer " + "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");
+        connection.setRequestProperty("Authorization", "Bearer " + DELETE_TOKEN);
         connection.setRequestMethod("DELETE");
 
         var responseMessage = connection.getResponseMessage();

@@ -29,20 +29,20 @@ class GithubApiClientTest {
     void contextLoads() {
     }
 
-//    @BeforeAll
-//    void beforeAll() throws IOException {
-//        githubApiClient.connect();
-//        githubApiClient.createRepository(HELLO_WORLD);
-//        githubApiClient.createRepoContent("Readme file content",
-//                "This commit is adding README file",
-//                "README.md", HELLO_WORLD);
-//        githubApiClient.createBranchOnRepository(HELLO_WORLD, "main");
-//    }
+    @BeforeAll
+    void beforeAll() throws IOException {
+        githubApiClient.connect();
+        githubApiClient.deleteRepo(HELLO_WORLD);
+        githubApiClient.createRepository(HELLO_WORLD);
+        githubApiClient.createRepoContent(HELLO_WORLD, "Readme file content",
+                "This commit is adding README file",
+                "README.md");
+    }
 
-//    @AfterAll
-//    void afterAll() throws IOException {
-//        githubApiClient.deleteRepo(HELLO_WORLD);
-//    }
+    @AfterAll
+    void afterAll() throws IOException {
+        githubApiClient.deleteRepo(HELLO_WORLD);
+    }
 
     @Test
     void GivenHelloWorldRepoExistsOnGh_getRepository_shouldReturnPresentOptionalOfGhRepo() throws IOException {
