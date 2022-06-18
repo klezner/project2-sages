@@ -1,6 +1,7 @@
 package com.sages.project2.common;
 
 
+import com.sages.project2.adapters.persistence.entities.QuestEntity;
 import com.sages.project2.adapters.persistence.entities.UserEntity;
 import com.sages.project2.adapters.persistence.repositories.JpaUserRepository;
 import lombok.RequiredArgsConstructor;
@@ -15,6 +16,8 @@ import org.springframework.security.core.authority.mapping.GrantedAuthoritiesMap
 import org.springframework.security.oauth2.core.user.OAuth2UserAuthority;
 import org.springframework.security.web.SecurityFilterChain;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Optional;
@@ -58,11 +61,12 @@ public class WebSecurityConfig {
 
                     String login = (String) userAttributes.get(LOGIN_ATTRIBUTE);
 
+                    Set<QuestEntity> quests = Collections.emptySet();
                     Optional.ofNullable(jpaUserRepository.findByLogin(login))
                             .ifPresentOrElse(
                                     user -> mappedAuthorities
                                             .addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole())),
-                                    () -> jpaUserRepository.save(new UserEntity(login, ROLE_USER)));
+                                    () -> jpaUserRepository.save(new UserEntity(login, ROLE_USER, quests)));
                 }
             });
 

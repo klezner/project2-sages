@@ -13,4 +13,5 @@ public interface QuestRepository {
 
     List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty);
 
+    Quest findById(Long questId);
 }

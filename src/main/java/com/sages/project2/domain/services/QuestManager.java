@@ -4,9 +4,11 @@ import com.sages.project2.commons.aop.Atomic;
 import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
 import com.sages.project2.domain.models.Quest;
+import com.sages.project2.domain.models.User;
 import com.sages.project2.domain.ports.in.QuestService;
 import com.sages.project2.domain.ports.out.GitClient;
 import com.sages.project2.domain.ports.out.QuestRepository;
+import com.sages.project2.domain.ports.out.UserRepository;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
@@ -17,6 +19,7 @@ import java.util.List;
 public class QuestManager implements QuestService {
 
     private final QuestRepository questRepository;
+    private final UserRepository userRepository;
     private final GitClient gitClient;
 
     @Atomic
@@ -26,7 +29,6 @@ public class QuestManager implements QuestService {
         quest.setStatus(QuestStatus.CREATED);
         quest.setRepoUrl(repoUrl);
         return questRepository.saveQuest(quest);
-
     }
 
     @Atomic
@@ -39,6 +41,14 @@ public class QuestManager implements QuestService {
     @Override
     public List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty) {
         return questRepository.findAllQuestsByDifficulty(difficulty);
+    }
+
+    @Override
+    public void addUserToQuest(Long questId, String userLogin) {
+        Quest quest = questRepository.findById(questId);
+        User user = userRepository.findById(userLogin);
+        quest.getUsers().add(user);
+        questRepository.saveQuest(quest);
     }
 
 }

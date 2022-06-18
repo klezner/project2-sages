@@ -19,7 +19,7 @@ import java.util.Optional;
 public class GithubApiClient implements GitClient {
 
     // admin username może być do wyjęcia z security context
-    private static final String ADMIN_GH_LOGIN = "gh_admin_username";
+    private static final String ADMIN_GH_LOGIN = "LukeJaromin";
     // klasa, do której trafiają rozwiązania użytkownika
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
 

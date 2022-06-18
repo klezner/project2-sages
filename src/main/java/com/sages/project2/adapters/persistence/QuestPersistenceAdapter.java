@@ -1,6 +1,7 @@
 package com.sages.project2.adapters.persistence;
 
 
+import com.sages.project2.adapters.exception.QuestNotFoundException;
 import com.sages.project2.adapters.persistence.mappers.QuestPersistenceMapper;
 import com.sages.project2.adapters.persistence.repositories.JpaQuestRepository;
 import com.sages.project2.domain.QuestDifficulty;
@@ -39,6 +40,13 @@ public class QuestPersistenceAdapter implements QuestRepository {
     public List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty) {
         var entities = questRepository.findAllByDifficulty(difficulty);
         return questMapper.toDomain(entities);
+    }
+
+    @Override
+    public Quest findById(Long questId) {
+        return questRepository.findById(questId)
+                .map(questMapper::toDomain)
+                .orElseThrow(() -> new QuestNotFoundException("Quest with id: " + questId + " does not exist."));
     }
 
 }

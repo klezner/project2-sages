@@ -7,6 +7,9 @@ import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
+import java.util.HashSet;
+import java.util.Set;
+
 @Entity
 @Getter
 @Setter
@@ -24,5 +27,7 @@ public class QuestEntity {
     @Enumerated(EnumType.STRING)
     private QuestDifficulty difficulty;
     private String content;
+    @ManyToMany(mappedBy = "quests")
+    private Set<UserEntity> users = new HashSet<>();
 
 }

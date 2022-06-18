@@ -14,4 +14,6 @@ public interface QuestService {
 
      List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty);
 
+     void addUserToQuest(Long questId, String userLogin);
 }
+
