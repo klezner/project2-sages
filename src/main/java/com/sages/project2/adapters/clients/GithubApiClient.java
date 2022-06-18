@@ -27,7 +27,7 @@ public class GithubApiClient implements GitClient {
     private static final String ADMIN_GH_LOGIN = "bartmj";
     // klasa, do której trafiają rozwiązania użytkownika
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
-    public static final String DELETE_TOKEN = "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";
+    public static final String DELETE_TOKEN = "";
 
     private GitHub github;
 
@@ -80,13 +80,14 @@ public class GithubApiClient implements GitClient {
         }
     }
 
-    public void createBranchOnRepository(String repoName, String branchName) throws IOException {
+    public boolean createBranchOnRepository(String repoName, String branchName) throws IOException {
         if (checkIfGithubBranchExists(repoName, branchName)) {
             throw new BranchAlreadyExistsException();
         }
         var repository = getRepository(repoName).get();
         String sha1 = repository.getBranch("main").getSHA1();
         repository.createRef("refs/heads/" + branchName, sha1);
+        return true;
     }
 
     @Override
@@ -107,7 +108,7 @@ public class GithubApiClient implements GitClient {
         }
     }
 
-    public void changeFileContentOnBranch(String repoName, String branchName,
+    public boolean changeFileContentOnBranch(String repoName, String branchName,
                                           String content, String commitMessage)
             throws IOException {
         var repository = getRepository(repoName);
@@ -115,6 +116,7 @@ public class GithubApiClient implements GitClient {
             var branchExists = checkIfGithubBranchExists(repoName, branchName);
             if (branchExists) {
                 repository.get().getFileContent(PATH_TO_MAIN_CLASS, branchName).update(content, commitMessage, branchName);
+                return true;
             } else {
                 throw new BranchDoesNotExistException();
             }

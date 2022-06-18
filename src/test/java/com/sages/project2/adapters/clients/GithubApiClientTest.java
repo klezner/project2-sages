@@ -39,31 +39,32 @@ class GithubApiClientTest {
                 "src/main/java/Main.java");
     }
 
-    @AfterAll
-    void afterAll() throws IOException {
-        System.out.println("After tests");
-    }
+//    @AfterAll
+//    void afterAll() throws IOException {
+//        githubApiClient.deleteRepo(HELLO_WORLD);
+//        System.out.println("After tests");
+//    }
 
     @Test
-    void GivenHelloWorldRepoExistsOnGh_getRepository_thenReturnPresentOptionalOfGhRepo() throws IOException {
+    void givenHelloWorldRepoExistsOnGh_getRepository_thenReturnPresentOptionalOfGhRepo() throws IOException {
         var repository = githubApiClient.getRepository(HELLO_WORLD);
         assertInstanceOf(GHRepository.class, repository.get());
     }
 
     @Test
-    void GivenRepoDoesNotExistOnGh_getRepository_thenReturnEmptyOptional() throws IOException {
+    void givenRepoDoesNotExistOnGh_getRepository_returnEmptyOptional() throws IOException {
         var repository = githubApiClient.getRepository("!@#$%^&*");
         assertTrue(repository.isEmpty());
     }
 
     @Test
-    void givenHelloWorldRepoExistsOnGhAndBranchExists_getGithubBranch_thenReturnPresentOptional() throws IOException {
+    void givenHelloWorldRepoExistsOnGhAndBranchExists_getGithubBranch_returnPresentOptional() throws IOException {
         var branch = githubApiClient.getGithubBranch(HELLO_WORLD, "main");
-        assertInstanceOf(GHBranch.class, branch.get());
+        assertTrue(branch.isPresent());
     }
 
     @Test
-    void givenHelloWorldRepoExistsOnGhAndBranchDoesNot_getGithubBranch_thenReturnEmptyOptional() throws IOException {
+    void givenHelloWorldRepoExistsOnGhAndBranchDoesNot_whenGetGithubBranch_returnEmptyOptional() throws IOException {
         var branch = githubApiClient.getGithubBranch(HELLO_WORLD, "!@#$%^&*");
         assertTrue(branch.isEmpty());
     }
@@ -75,12 +76,22 @@ class GithubApiClientTest {
     }
 
     @Test
-    void givenBranchExists_whenCreateBranchOnRepository_thenThrowsBranchAlreadyExistsException() {
+    void givenBranchExists_checkIfGithubBranchExists_returnTrue() throws IOException {
+        assertEquals(githubApiClient.checkIfGithubBranchExists(HELLO_WORLD, "main"), true);
+    }
+
+    @Test
+    void givenBranchDoesNotExist_checkIfGithubBranchExists_returnFalse() throws IOException {
+        assertEquals(githubApiClient.checkIfGithubBranchExists(HELLO_WORLD, "!@#$%^&*"), false);
+    }
+
+    @Test
+    void givenBranchExists_whenCreateBranchOnRepository_throwsBranchAlreadyExistsException() {
         assertThrows(BranchAlreadyExistsException.class, () -> githubApiClient.createBranchOnRepository(HELLO_WORLD, "main"));
     }
 
     @Test
-    void givenRepoIsNotEmpty_getFileContentOnBranch_thenReturnOptionalOfGhContent() throws IOException {
+    void givenRepoIsNotEmpty_changeFileContentOnBranch_returnOptionalOfGhContent() throws IOException {
         githubApiClient.changeFileContentOnBranch(HELLO_WORLD, "username", "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.print(\"Hello World!\");\n" +

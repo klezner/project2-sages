@@ -42,10 +42,8 @@ public class QuestManager implements QuestService, SolutionService {
         var quest = questRepository.getQuest(questId);
         var questName = quest.getQuestName();
 
-        try {
-            gitClient.checkIfGithubBranchExists(questName, username);
-        } catch (BranchDoesNotExistException e) {
-            gitClient.createBranchOnRepository(quest.getQuestName(), username);
+        if (!gitClient.checkIfGithubBranchExists(questName, username)) {
+            gitClient.createBranchOnRepository(questName, username);
         }
 
         gitClient.changeFileContentOnBranch(questName, username, solution.getSolution(), "Commited by: " + username);
@@ -56,20 +54,16 @@ public class QuestManager implements QuestService, SolutionService {
             e.printStackTrace();
         }
 
-        var solutionWithResult = evaluateSolution(solution, checkedSolution);
-
-        solutionRepository.saveSolution(solutionWithResult);
-        return solutionWithResult;
-    }
-
-    private Solution evaluateSolution(Solution solution, String checkedSolution) {
         if (checkedSolution.contains("SUCCESS")) {
             solution.setResult(true);
         } else {
             solution.setResult(false);
         }
+
+        solutionRepository.saveSolution(solution);
         return solution;
     }
+
 }
 
 

@@ -12,7 +12,6 @@ import lombok.Value;
 @Builder
 public class Quest {
 
-
     String questName;
     String repoUrl;
     QuestStatus status;

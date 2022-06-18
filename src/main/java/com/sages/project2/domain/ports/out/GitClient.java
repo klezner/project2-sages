@@ -7,12 +7,12 @@ import java.util.Optional;
 
 public interface GitClient {
 
-    public void createBranchOnRepository(String repoName, String branchName) throws IOException;
+    public boolean createBranchOnRepository(String repoName, String branchName) throws IOException;
 
     public boolean checkIfGithubBranchExists(String repoName, String branchName) throws IOException;
 
     String createRepository(String repoName) throws IOException;
 
-    void changeFileContentOnBranch(String repoName, String branchName, String content, String commitMessage) throws IOException;
+    boolean changeFileContentOnBranch(String repoName, String branchName, String content, String commitMessage) throws IOException;
 
 }
