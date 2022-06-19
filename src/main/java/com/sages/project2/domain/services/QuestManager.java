@@ -37,6 +37,7 @@ public class QuestManager implements QuestService, SolutionService {
 
     }
 
+    @Atomic
     @Override
     public Solution addSolution(Solution solution) throws IOException {
         var questId = solution.getQuestId();
