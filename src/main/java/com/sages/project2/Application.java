@@ -17,9 +17,10 @@ import java.util.Optional;
 @SpringBootApplication
 public class Application {
 
-    public static void main(String[] args) throws IOException {
+    public static void main(String[] args) {
 
         ConfigurableApplicationContext context = SpringApplication.run(Application.class, args);
+
 
         GithubApiClient githubAPICLient = context.getBean("githubApiClient", GithubApiClient.class);
 

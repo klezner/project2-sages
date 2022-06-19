@@ -1,5 +1,6 @@
 package com.sages.project2.adapters.rest;
 
+import com.sages.project2.adapters.persistence.entities.QuestEntity;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.domain.QuestDifficulty;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
+import java.util.Set;
 
 @RestController
 @RequestMapping("/quests")
@@ -61,7 +63,11 @@ public class QuestController {
                 .status(HttpStatus.OK)
                 .body(dtos);
     }
-
+    @PostMapping("/{questId}/{userLogin}")
+    public ResponseEntity<String> addUserToQuest(@PathVariable Long questId, @PathVariable String userLogin) {
+        questService.addUserToQuest(questId, userLogin);
+        return ResponseEntity.ok().body(String.format("User %s added to quest with id %d.", userLogin, questId));
+    }
 }
 
 

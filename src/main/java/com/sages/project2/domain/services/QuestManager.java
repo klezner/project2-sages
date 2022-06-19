@@ -5,11 +5,13 @@ import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
 import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.models.Solution;
+import com.sages.project2.domain.models.User;
 import com.sages.project2.domain.ports.in.QuestService;
 import com.sages.project2.domain.ports.in.SolutionService;
 import com.sages.project2.domain.ports.out.DockerApiClient;
 import com.sages.project2.domain.ports.out.GitClient;
 import com.sages.project2.domain.ports.out.QuestRepository;
+import com.sages.project2.domain.ports.out.UserRepository;
 import com.sages.project2.domain.ports.out.SolutionRepository;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;
@@ -23,6 +25,7 @@ import java.util.List;
 public class QuestManager implements QuestService, SolutionService {
 
     private final QuestRepository questRepository;
+    private final UserRepository userRepository;
     private final GitClient gitClient;
     private final DockerApiClient dockerClient;
     private final SolutionRepository solutionRepository;
@@ -34,7 +37,6 @@ public class QuestManager implements QuestService, SolutionService {
         quest.setStatus(QuestStatus.CREATED);
         quest.setRepoUrl(repoUrl);
         return questRepository.saveQuest(quest);
-
     }
 
     @Atomic
@@ -91,6 +93,14 @@ public class QuestManager implements QuestService, SolutionService {
     public List<Quest> findAllQuestsByDifficultyAndStatus(QuestDifficulty difficulty, QuestStatus status) {
         return questRepository.findAllQuestsByDifficultyAndStatus(difficulty, status);
 
+    }
+
+    @Override
+    public void addUserToQuest(Long questId, String userLogin) {
+        Quest quest = questRepository.findById(questId);
+        User user = userRepository.findById(userLogin);
+        quest.getUsers().add(user);
+        questRepository.saveQuest(quest);
     }
 
 }
