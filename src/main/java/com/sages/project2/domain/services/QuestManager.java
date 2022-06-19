@@ -1,8 +1,9 @@
 package com.sages.project2.domain.services;
 
 import com.sages.project2.commons.aop.Atomic;
+import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
-import com.sages.project2.domain.exceptions.BranchDoesNotExistException;
+
 import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.models.Solution;
 import com.sages.project2.domain.ports.in.QuestService;
@@ -16,6 +17,7 @@ import com.spotify.docker.client.exceptions.DockerException;
 import lombok.RequiredArgsConstructor;
 
 import java.io.IOException;
+import java.util.List;
 
 @RequiredArgsConstructor
 public class QuestManager implements QuestService, SolutionService {
@@ -34,6 +36,7 @@ public class QuestManager implements QuestService, SolutionService {
         return questRepository.saveQuest(quest);
 
     }
+
 
     @Override
     public Solution addSolution(Solution solution) throws IOException {
@@ -62,6 +65,31 @@ public class QuestManager implements QuestService, SolutionService {
 
         solutionRepository.saveSolution(solution);
         return solution;
+    }
+
+    @Atomic
+    @Override
+    public List<Quest> findAllQuests() {
+        return questRepository.findAllQuests();
+    }
+
+    @Atomic
+    @Override
+    public List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty) {
+        return questRepository.findAllQuestsByDifficulty(difficulty);
+    }
+
+    @Atomic
+    @Override
+    public List<Quest> findAllQuestsByStatus(QuestStatus status) {
+        return questRepository.findAllQuestsByStatus(status);
+    }
+
+    @Atomic
+    @Override
+    public List<Quest> findAllQuestsByDifficultyAndStatus(QuestDifficulty difficulty, QuestStatus status) {
+        return questRepository.findAllQuestsByDifficultyAndStatus(difficulty, status);
+
     }
 
 }

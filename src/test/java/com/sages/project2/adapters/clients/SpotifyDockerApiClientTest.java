@@ -42,8 +42,8 @@ class SpotifyDockerApiClientTest {
 
     @Test
     void givenRepoExistsAndSolutionOnUsersBranchIsCorrect_whenCheckSolution_thenReturnStringContainingSuccess() throws DockerException, DockerCertificateException, InterruptedException, IOException {
-        githubApiClient.createBranchOnRepository("hello-world", "some-username-1");
-        githubApiClient.changeFileContentOnBranch("hello-world", "some-username-1", "public class Main {\n" +
+        githubApiClient.createBranchOnRepository("hello-world", "some-username-12");
+        githubApiClient.changeFileContentOnBranch("hello-world", "some-username-12", "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.print(\"Hello World!\");\n" +
                 "    }\n" +

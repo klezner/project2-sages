@@ -5,7 +5,6 @@ import com.sages.project2.domain.QuestStatus;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
-import lombok.Value;
 
 @Setter
 @Getter

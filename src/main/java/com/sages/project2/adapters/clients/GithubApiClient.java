@@ -124,8 +124,8 @@ public class GithubApiClient implements GitClient {
     }
 
 
-    public String deleteRepo(String helloWorld) throws IOException {
-        URL url = new URL("https://api.github.com/repos/" + ADMIN_GH_LOGIN + "/" + helloWorld);
+    public String deleteRepo(String repoName) throws IOException {
+        URL url = new URL("https://api.github.com/repos/" + ADMIN_GH_LOGIN + "/" + repoName);
 
         HttpURLConnection connection = (HttpURLConnection) url.openConnection();
 
