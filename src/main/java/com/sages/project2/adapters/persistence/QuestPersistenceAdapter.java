@@ -15,7 +15,6 @@ import java.util.List;
 
 import static org.springframework.transaction.annotation.Propagation.MANDATORY;
 
-
 @RequiredArgsConstructor
 @Service
 @Transactional(propagation = MANDATORY)
@@ -31,6 +30,11 @@ public class QuestPersistenceAdapter implements QuestRepository {
     }
 
     @Override
+    public Quest getQuest(Long id) {
+        var questEntity = questRepository.findQuestById(id);
+        return questMapper.toDomain(questEntity);
+    }
+
     public List<Quest> findAllQuests() {
         var entities = questRepository.findAll();
         return questMapper.toDomain(entities);

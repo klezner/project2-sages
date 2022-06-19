@@ -9,13 +9,17 @@ import lombok.*;
 @Getter
 @Setter
 @AllArgsConstructor
-@NoArgsConstructor
 @EqualsAndHashCode(of = "id")
-@Table(name = "users")
-public class UserEntity {
+@NoArgsConstructor
+@Table(name = "solutions")
+public class SolutionEntity {
 
     @Id
     private String login;
-    private String role;
+    private Long userId;
+    private String username;
+    private Long questId;
+    private String solution;
+    private boolean result;
 
 }
