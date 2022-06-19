@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 
 import org.springframework.scheduling.annotation.Async;
 
+
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
@@ -41,7 +42,6 @@ public class QuestController {
                 .status(HttpStatus.CREATED)
                 .body(questId);
     }
-
 
     @GetMapping
     public ResponseEntity<List<QuestDto>> getQuests(@RequestParam(required = false) QuestDifficulty difficulty,

@@ -10,9 +10,8 @@ public interface QuestRepository {
 
     Long saveQuest(Quest quest);
 
-
     Quest getQuest(Long id);
-
+  
     List<Quest> findAllQuests();
 
     List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty);
@@ -20,6 +19,5 @@ public interface QuestRepository {
     List<Quest> findAllQuestsByStatus(QuestStatus status);
 
     List<Quest> findAllQuestsByDifficultyAndStatus(QuestDifficulty difficulty, QuestStatus status);
-
 
 }
