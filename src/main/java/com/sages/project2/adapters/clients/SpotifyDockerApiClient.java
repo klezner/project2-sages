@@ -17,8 +17,8 @@ public class SpotifyDockerApiClient implements DockerApiClient {
     public static final String PATH_TO_M2_FOLDER = "/home/bartekj/.m2/";
     public static final String DOCKER_IMAGE = "codequest";
     public static final String GITHUB_ADMIN_USERNAME = "codequest504";
-    @Value("${github.app.oauth}")
-    public static String GH_TOKEN;
+//    @Value("${github.app.oauth}")
+    public static String GH_TOKEN = "TOKEN_TOKEN_TOKEN";
 
     public String checkSolution(String repoName, String branchName) throws DockerCertificateException, DockerException, InterruptedException {
         final DockerClient docker = DefaultDockerClient.fromEnv().build();
