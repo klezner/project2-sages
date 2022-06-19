@@ -20,6 +20,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class SpotifyDockerApiClientTest {
 
+    public static final String USERNAME = "username-123";
     @Autowired
     private DockerApiClient dockerApiClient;
     @Autowired
@@ -42,13 +43,13 @@ class SpotifyDockerApiClientTest {
 
     @Test
     void givenRepoExistsAndSolutionOnUsersBranchIsCorrect_whenCheckSolution_thenReturnStringContainingSuccess() throws DockerException, DockerCertificateException, InterruptedException, IOException {
-        githubApiClient.createBranchOnRepository("hello-world", "some-username-12");
-        githubApiClient.changeFileContentOnBranch("hello-world", "some-username-12", "public class Main {\n" +
+        githubApiClient.createBranchOnRepository("hello-world", USERNAME);
+        githubApiClient.changeFileContentOnBranch("hello-world", USERNAME, "public class Main {\n" +
                 "    public static void main(String[] args) {\n" +
                 "        System.out.print(\"Hello World!\");\n" +
                 "    }\n" +
                 "}", "test-commit");
-        var res = dockerApiClient.checkSolution("hello-world", "some-username-1");
+        var res = dockerApiClient.checkSolution("hello-world", USERNAME);
         assertTrue(res.contains("SUCCESS"));
     }
 }
