@@ -2,15 +2,11 @@ package com.sages.project2.adapters.clients;
 
 import com.sages.project2.domain.exceptions.BranchAlreadyExistsException;
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.extension.ExtendWith;
 import org.kohsuke.github.*;
-import org.mockito.InjectMocks;
-import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.io.IOException;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -18,7 +14,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 class GithubApiClientTest {
 
-    public static final String HELLO_WORLD = "hello-world";
+    public static final String HELLO_WORLD = "abc";
 
     @Autowired
     private GithubApiClient githubApiClient;
@@ -39,11 +35,11 @@ class GithubApiClientTest {
                 "src/main/java/Main.java");
     }
 
-//    @AfterAll
-//    void afterAll() throws IOException {
-//        githubApiClient.deleteRepo(HELLO_WORLD);
-//        System.out.println("After tests");
-//    }
+    @AfterAll
+    void afterAll() throws IOException {
+        githubApiClient.deleteRepo(HELLO_WORLD);
+        System.out.println("After tests");
+    }
 
     @Test
     void givenHelloWorldRepoExistsOnGh_getRepository_thenReturnPresentOptionalOfGhRepo() throws IOException {

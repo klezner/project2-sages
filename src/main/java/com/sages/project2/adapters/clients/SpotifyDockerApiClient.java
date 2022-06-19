@@ -13,10 +13,10 @@ import java.util.*;
 @Component
 public class SpotifyDockerApiClient implements DockerApiClient {
 
-    public static final String PATH_TO_M2 = "/home/bartekj/.m2/";
-    public static final String IMAGE = "codequest";
+    public static final String PATH_TO_M2_FOLDER = "/home/bartekj/.m2/";
+    public static final String DOCKER_IMAGE = "codequest";
     public static final String GITHUB_ADMIN_USERNAME = "codequest504";
-    public static final String GH_TOKEN = "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";
+    public static final String GH_TOKEN = "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";
 
     public String checkSolution(String repoName, String branchName) throws DockerCertificateException, DockerException, InterruptedException {
         final DockerClient docker = DefaultDockerClient.fromEnv().build();
@@ -36,14 +36,14 @@ public class SpotifyDockerApiClient implements DockerApiClient {
         portBindings.put("443", randomPort);
 
         final HostConfig hostConfig = HostConfig.builder()
-                .binds(PATH_TO_M2 + ":/root/.m2/")
+                .binds(PATH_TO_M2_FOLDER + ":/root/.m2/")
                 .portBindings(portBindings).build();
 
 
 // Create container with exposed ports
         final ContainerConfig containerConfig = ContainerConfig.builder()
                 .hostConfig(hostConfig)
-                .image(IMAGE).exposedPorts(ports)
+                .image(DOCKER_IMAGE).exposedPorts(ports)
                 .cmd("sh", "-c", "while :; do sleep 1; done;")
                 .build();
 
@@ -58,9 +58,6 @@ public class SpotifyDockerApiClient implements DockerApiClient {
 
 // Exec command inside running container with attached STDOUT and STDERR
         ArrayList<String[]> listOfCommands = new ArrayList<>();
-
-//        listOfCommands.add(new String[]{"git", "clone", "--branch", branchName, "--single-branch",
-//                "https://" + GithubApiClient.DELETE_TOKEN + "@github.com/" + GITHUB_ADMIN_USERNAME + "/" + repoName + ".git"});
 
         listOfCommands.add(new String[]{"git", "clone", "--branch", branchName,
                 "--single-branch", "https://" + GH_TOKEN + "@github.com/" + GITHUB_ADMIN_USERNAME + "/" + repoName + ".git"});

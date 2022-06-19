@@ -37,5 +37,5 @@ Content-Type: application/json
 ###
 DELETE https://api.github.com/repos/${user}/${nazwa-repo}
 Accept: application/vnd.github.v3+json
-Authorization: Bearer token_do_usuwania_repo
+Authorization: Bearer ghp_fs08hdsfsdsdfsdfsdfw4w
 
