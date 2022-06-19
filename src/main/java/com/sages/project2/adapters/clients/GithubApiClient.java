@@ -8,6 +8,7 @@ import com.sages.project2.domain.exceptions.RepositoryDoesNotExistException;
 import com.sages.project2.domain.ports.out.GitClient;
 import lombok.RequiredArgsConstructor;
 import org.kohsuke.github.*;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 
@@ -25,7 +26,8 @@ public class GithubApiClient implements GitClient {
 
     private static final String ADMIN_GH_LOGIN = "codequest504";
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
-    public static final String DELETE_TOKEN = "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";
+    @Value("${github.app.oauth}")
+    public static String DELETE_TOKEN;
 
     private GitHub github;
 

@@ -65,15 +65,15 @@
             <artifactId>docker-client</artifactId>
             <version>8.16.0</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.boot</groupId>-->
-<!--            <artifactId>spring-boot-starter-oauth2-client</artifactId>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security</groupId>-->
-<!--            <artifactId>spring-security-oauth2-client</artifactId>-->
-<!--            <version>6.0.0-M5</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-oauth2-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-oauth2-client</artifactId>
+            <version>6.0.0-M5</version>
+        </dependency>
         <dependency>
             <groupId>org.kohsuke</groupId>
             <artifactId>github-api</artifactId>
@@ -82,18 +82,18 @@
         <dependency>
             <groupId>org.springdoc</groupId>
             <artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
-            <version>2.0.0-M1</version>
+            <version>2.0.0-M3</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-autoconfigure</artifactId>
             <version>3.0.0-SNAPSHOT</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>org.springframework.security.oauth.boot</groupId>-->
-<!--            <artifactId>spring-security-oauth2-autoconfigure</artifactId>-->
-<!--            <version>2.2.6.RELEASE</version>-->
-<!--        </dependency>-->
+        <dependency>
+            <groupId>org.springframework.security.oauth.boot</groupId>
+            <artifactId>spring-security-oauth2-autoconfigure</artifactId>
+            <version>2.2.6.RELEASE</version>
+        </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-tomcat</artifactId>

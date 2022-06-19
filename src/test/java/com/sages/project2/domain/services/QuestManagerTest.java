@@ -8,7 +8,6 @@ import com.sages.project2.domain.ports.out.DockerApiClient;
 import com.sages.project2.domain.ports.out.GitClient;
 import com.sages.project2.domain.ports.out.QuestRepository;
 import com.sages.project2.domain.ports.out.SolutionRepository;
-import com.spotify.docker.client.DockerClient;
 import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;
 import org.junit.jupiter.api.Test;
@@ -19,7 +18,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.io.IOException;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
