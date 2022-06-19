@@ -4,6 +4,7 @@ import com.sages.project2.adapters.persistence.entities.QuestEntity;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.domain.QuestDifficulty;
+import com.sages.project2.domain.QuestStatus;
 import com.sages.project2.domain.exceptions.RepositoryAlreadyExistsException;
 import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.ports.in.QuestService;
@@ -41,10 +42,15 @@ public class QuestController {
     }
 
     @GetMapping
-    public ResponseEntity<List<QuestDto>> getQuests(@RequestParam(required = false) QuestDifficulty difficulty) {
+    public ResponseEntity<List<QuestDto>> getQuests(@RequestParam(required = false) QuestDifficulty difficulty,
+                                                    @RequestParam(required = false) QuestStatus status) {
         List<Quest> quests;
-        if (difficulty != null) {
+        if (difficulty != null && status != null) {
+            quests = questService.findAllQuestsByDifficultyAndStatus(difficulty, status);
+        } else if (difficulty != null && status == null) {
             quests = questService.findAllQuestsByDifficulty(difficulty);
+        } else if (difficulty == null && status != null) {
+            quests = questService.findAllQuestsByStatus(status);
         } else {
             quests = questService.findAllQuests();
         }

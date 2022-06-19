@@ -13,5 +13,9 @@ public interface QuestRepository {
 
     List<Quest> findAllQuestsByDifficulty(QuestDifficulty difficulty);
 
+    List<Quest> findAllQuestsByStatus(QuestStatus status);
+
+    List<Quest> findAllQuestsByDifficultyAndStatus(QuestDifficulty difficulty, QuestStatus status);
+
     Quest findById(Long questId);
 }
