@@ -5,6 +5,7 @@ import com.spotify.docker.client.exceptions.DockerCertificateException;
 import com.spotify.docker.client.exceptions.DockerException;
 import com.spotify.docker.client.messages.*;
 import lombok.SneakyThrows;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import com.sages.project2.domain.ports.out.DockerApiClient;
 
@@ -16,7 +17,8 @@ public class SpotifyDockerApiClient implements DockerApiClient {
     public static final String PATH_TO_M2_FOLDER = "/home/bartekj/.m2/";
     public static final String DOCKER_IMAGE = "codequest";
     public static final String GITHUB_ADMIN_USERNAME = "codequest504";
-    public static final String GH_TOKEN = "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";
+    @Value("${github.app.oauth}")
+    public static String GH_TOKEN;
 
     public String checkSolution(String repoName, String branchName) throws DockerCertificateException, DockerException, InterruptedException {
         final DockerClient docker = DefaultDockerClient.fromEnv().build();
