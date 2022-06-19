@@ -79,7 +79,7 @@ public class DockerService {
             docker.close();
 
         }
-            return output.get(output.size() - 1);
+        return output.get(output.size() - 1);
     }
 
     public static String sendToContainer(String[] commands, String id, DockerClient docker) {

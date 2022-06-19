@@ -10,6 +10,9 @@ import java.util.List;
 
 public interface JpaQuestRepository extends JpaRepository<QuestEntity, Long> {
 
+    
+    QuestEntity findQuestById(Long id);
+
     List<QuestEntity> findAllByDifficulty(QuestDifficulty difficulty);
 
     List<QuestEntity> findAllByStatus(QuestStatus status);
