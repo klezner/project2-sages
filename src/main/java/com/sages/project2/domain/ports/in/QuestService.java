@@ -19,6 +19,9 @@ public interface QuestService {
 
     List<Quest> findAllQuestsByDifficultyAndStatus(QuestDifficulty difficulty, QuestStatus status);
 
-     void addUserToQuest(Long questId, String userLogin);
+    void addUserToQuest(Long questId, String userLogin);
+
+    boolean check(Long questId, String userLogin);
+
 }
 

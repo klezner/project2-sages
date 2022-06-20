@@ -6,11 +6,11 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class QuestVerificationServiceImpl implements QuestVerificationService {
+public class QuestVerificationTrigger implements QuestVerificationService {
 
     @Override
-    public boolean triggerQuest(long userId, long questId) {
-        //logic should be implemented in PROJ2-7
+    public boolean triggerQuest(long questId, String userLogin) {
+        // TODO: to implement getting branch and check solution
         return false;
     }
 }
