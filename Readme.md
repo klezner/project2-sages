@@ -1,6 +1,6 @@
 Podmiana danych do GitHub:
 ctr + alt + r
-GH_TOKEN_GH_TOKEN
+GH_TOKEN_GH_TOKEN oraz 
 GH_USERNAME_GH_USERNAME
 
 Dodatkowo można w pliku SpotifyDockerApiClient podmienić PATH_TO_LOCAL_M2_FOLDER
