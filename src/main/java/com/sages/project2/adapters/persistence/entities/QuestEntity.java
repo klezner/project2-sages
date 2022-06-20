@@ -1,27 +1,33 @@
 package com.sages.project2.adapters.persistence.entities;
 
+import com.sages.project2.domain.QuestDifficulty;
+import com.sages.project2.domain.QuestStatus;
 import jakarta.persistence.*;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.List;
-
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@EqualsAndHashCode(of = "id")
 @Table(name = "quests")
 public class QuestEntity {
 
     @Id
     @GeneratedValue
-    private Long questId;
-
+    private Long id;
+    private String questName;
     private String repoUrl;
-
-    private String questContent;
-
-    @OneToMany
-    private List<UserEntity> users;
+    @Enumerated(EnumType.STRING)
+    private QuestStatus status;
+    @Enumerated(EnumType.STRING)
+    private QuestDifficulty difficulty;
+    private String content;
+    @ManyToMany(mappedBy = "quests")
+    private Set<UserEntity> users = new HashSet<>();
 
 }

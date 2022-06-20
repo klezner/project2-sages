@@ -1,35 +1,25 @@
 package com.sages.project2.adapters.persistence.entities;
 
-import jakarta.persistence.*;
-import lombok.Getter;
-import lombok.Setter;
-
-import java.time.LocalDate;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import lombok.*;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 @Table(name = "solutions")
 public class SolutionEntity {
 
     @Id
-    @GeneratedValue
-    private Long solutionId;
+    private String login;
+    private Long userId;
+    private String username;
+    private Long questId;
+    private String solution;
+    private boolean result;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id")
-    private UserEntity user;
-
-    @ManyToOne
-    @JoinColumn(name = "quest_id")
-    private QuestEntity quest;
-
-    private String branchQuery;
-
-    private String commitQuery;
-
-    // enum ?
-    private String result;
-
-    private LocalDate date;
 }

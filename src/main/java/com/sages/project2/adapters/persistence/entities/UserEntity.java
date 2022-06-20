@@ -1,25 +1,35 @@
 package com.sages.project2.adapters.persistence.entities;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@EqualsAndHashCode(of = "id")
 @Table(name = "users")
 public class UserEntity {
 
     @Id
-    @GeneratedValue
-    private Long userId;
-
     private String login;
-    //enum?
     private String role;
+
+    @ManyToMany
+    @JoinTable(
+            name= "users_quests",
+            joinColumns = @JoinColumn(name="user_login"),
+            inverseJoinColumns = @JoinColumn(name="quest_id")
+    )
+    private Set<QuestEntity> quests = new HashSet<>();
 
 }

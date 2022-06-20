@@ -1,12 +1,26 @@
 package com.sages.project2.domain.models;
 
-import lombok.Data;
+import com.sages.project2.domain.QuestDifficulty;
+import com.sages.project2.domain.QuestStatus;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
+import lombok.Setter;
 
-@Data
+import java.util.Set;
+
+@Setter
+@Getter
+@Builder
 public class Quest {
 
-    private long id;
-    private String repoUrl;
-    private String questContent;
+    String questName;
+    String repoUrl;
+    QuestStatus status;
+    QuestDifficulty difficulty;
+    String content;
+    Set<User> users;
 
 }

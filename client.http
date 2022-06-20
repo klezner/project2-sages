@@ -1,0 +1,41 @@
+POST http://localhost:8090/quests/admin
+Accept: application/json
+Content-Type: application/json
+
+{
+  "questName": "hello-world-1",
+  "content": "Create a class with main method that prints \"Hello World!\" to the console.",
+  "difficulty": "BEGINNER"
+}
+
+###
+POST http://localhost:9090/users
+Accept: application/json
+Content-Type: application/json
+
+{
+
+  "login": "Johnny",
+  "role": "user"
+
+}
+
+###
+POST http://localhost:8090/solutions
+Accept: application/json
+Content-Type: application/json
+
+{
+  "userId": 1,
+  "username": "Johhny",
+  "questId": 1,
+  "solution": "public class Main { public static void main(String[] args) { System.out.print(\"Hello World!\"); } }",
+  "result": null
+
+}
+
+###
+DELETE https://api.github.com/repos/${user}/${nazwa-repo}
+Accept: application/vnd.github.v3+json
+Authorization: Bearer ghp_fs08hdsfsdsdfsdfsdfw4w
+
