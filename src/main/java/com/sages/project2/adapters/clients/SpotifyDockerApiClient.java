@@ -14,8 +14,8 @@ import java.util.*;
 @Component
 public class SpotifyDockerApiClient implements DockerApiClient {
 
-    public static final String PATH_TO_M2_FOLDER = "/home/bartekj/.m2/";
-    public static final String DOCKER_IMAGE = "bartmj/codequest:1.0";
+    public static final String PATH_TO_LOCAL_M2_FOLDER = "/home/bartekj/.m2/";
+    public static final String DOCKER_IMAGE = "geri2045/ad:aadd";
     public static final String GITHUB_ADMIN_USERNAME = "bartmj";
     public static String GH_TOKEN = "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";
 
@@ -37,7 +37,7 @@ public class SpotifyDockerApiClient implements DockerApiClient {
         portBindings.put("443", randomPort);
 
         final HostConfig hostConfig = HostConfig.builder()
-                .binds(PATH_TO_M2_FOLDER + ":/root/.m2/")
+                .binds(PATH_TO_LOCAL_M2_FOLDER + ":/root/.m2/")
                 .portBindings(portBindings).build();
 
 
