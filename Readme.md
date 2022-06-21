@@ -1,5 +1,5 @@
 Podmiana danych do GitHub:
-ctr + alt + r
+ctr + shift + r
 GH_TOKEN_GH_TOKEN oraz 
 GH_USERNAME_GH_USERNAME
 
