@@ -24,10 +24,9 @@ import java.util.Optional;
 @RequiredArgsConstructor
 public class GithubApiClient implements GitClient {
 
-    private static final String ADMIN_GH_LOGIN = "codequest504";
+    private static final String ADMIN_GH_LOGIN = "GH_USERNAME_GH_USERNAME";
     public static final String PATH_TO_MAIN_CLASS = "src/main/java/Main.java";
-    @Value("${github.app.oauth}")
-    public static String DELETE_TOKEN;
+    public static String DELETE_TOKEN = "GH_TOKEN_GH_TOKEN";
 
     private GitHub github;
 
