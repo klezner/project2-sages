@@ -23,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
-class QuestManagerTest {
+class SolutionManagerTest {
 
     @Mock
     private QuestRepository questRepository;
@@ -31,10 +31,10 @@ class QuestManagerTest {
     private GitClient gitClient;
     @Mock
     private DockerApiClient dockerClient;
+    @InjectMocks
+    private SolutionManager solutionManager;
     @Mock
     SolutionRepository solutionRepository;
-    @InjectMocks
-    private QuestManager questManager;
 
     @Test
     void context() {
@@ -73,7 +73,7 @@ class QuestManagerTest {
         when(dockerClient.checkSolution(questName, username)).thenReturn("tests with word SUCCESS");
         when(gitClient.checkIfGithubBranchExists(questName, username)).thenReturn(true);
 
-        var solution = questManager.addSolution(usersSolution);
+        var solution = solutionManager.addSolution(usersSolution);
 
         assertTrue(solution.isResult());
     }
@@ -92,7 +92,7 @@ class QuestManagerTest {
         when(dockerClient.checkSolution(questName, username)).thenReturn("tests with word FAILURE");
         when(gitClient.checkIfGithubBranchExists(questName, username)).thenReturn(true);
 
-        var solution = questManager.addSolution(usersSolution);
+        var solution = solutionManager.addSolution(usersSolution);
 
         assertFalse(solution.isResult());
     }
@@ -111,7 +111,7 @@ class QuestManagerTest {
         when(dockerClient.checkSolution(questName, username)).thenReturn("tests with word SUCCESS");
         when(gitClient.checkIfGithubBranchExists(questName, username)).thenReturn(false);
 
-        var solution = questManager.addSolution(usersSolution);
+        var solution = solutionManager.addSolution(usersSolution);
 
         assertTrue(solution.isResult());
     }
@@ -130,7 +130,7 @@ class QuestManagerTest {
         when(dockerClient.checkSolution(questName, username)).thenReturn("tests with word FAILURE");
         when(gitClient.checkIfGithubBranchExists(questName, username)).thenReturn(false);
 
-        var solution = questManager.addSolution(usersSolution);
+        var solution = solutionManager.addSolution(usersSolution);
 
         assertFalse(solution.isResult());
     }

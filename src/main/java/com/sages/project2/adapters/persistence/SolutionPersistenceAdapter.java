@@ -1,6 +1,5 @@
 package com.sages.project2.adapters.persistence;
 
-import com.sages.project2.adapters.persistence.entities.SolutionEntity;
 import com.sages.project2.adapters.persistence.mappers.SolutionPersistenceMapper;
 import com.sages.project2.adapters.persistence.repositories.JpaSolutionRepository;
 import com.sages.project2.domain.models.Solution;
