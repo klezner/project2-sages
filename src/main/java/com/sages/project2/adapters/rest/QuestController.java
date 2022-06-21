@@ -1,6 +1,5 @@
 package com.sages.project2.adapters.rest;
 
-import com.sages.project2.adapters.persistence.entities.QuestEntity;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.domain.QuestDifficulty;
@@ -11,15 +10,10 @@ import com.sages.project2.domain.ports.in.QuestService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-
-import org.springframework.scheduling.annotation.Async;
-
-
 import org.springframework.web.bind.annotation.*;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 @RestController
 @RequestMapping("/quests")

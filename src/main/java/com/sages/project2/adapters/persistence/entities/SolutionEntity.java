@@ -1,8 +1,6 @@
 package com.sages.project2.adapters.persistence.entities;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.Id;
-import jakarta.persistence.Table;
+import jakarta.persistence.*;
 import lombok.*;
 
 @Entity
@@ -18,7 +16,7 @@ public class SolutionEntity {
     private String login;
     private Long userId;
     private String username;
-    private Long questId;
+    private String questName;
     private String solution;
     private boolean result;
 
