@@ -18,10 +18,9 @@ public class AppConfiguration {
     }
 
     @Bean(name = "solutionService")
-    public SolutionService getSolutionService(QuestRepository questPersistenceAdapter,
-                                           GitClient gitClient, DockerApiClient dockerApiClient,
+    public SolutionService getSolutionService(GitClient gitClient, DockerApiClient dockerApiClient,
                                            SolutionRepository solutionRepository){
-        return new SolutionManager(questPersistenceAdapter, gitClient, dockerApiClient, solutionRepository);
+        return new SolutionManager(gitClient, dockerApiClient, solutionRepository);
     }
 
 }

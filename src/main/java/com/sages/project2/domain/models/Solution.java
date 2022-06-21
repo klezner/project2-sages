@@ -11,7 +11,7 @@ public class Solution {
 
     Long userId;
     String username;
-    Long questId;
+    String questName;
     String solution;
     boolean result;
 

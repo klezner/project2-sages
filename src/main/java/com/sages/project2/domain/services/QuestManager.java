@@ -53,7 +53,6 @@ public class QuestManager implements QuestService {
     @Override
     public List<Quest> findAllQuestsByDifficultyAndStatus(QuestDifficulty difficulty, QuestStatus status) {
         return questRepository.findAllQuestsByDifficultyAndStatus(difficulty, status);
-
     }
 
     @Override

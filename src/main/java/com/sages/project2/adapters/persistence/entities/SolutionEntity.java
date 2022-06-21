@@ -16,7 +16,7 @@ public class SolutionEntity {
     private String login;
     private Long userId;
     private String username;
-    private Long questId;
+    private String questName;
     private String solution;
     private boolean result;
 

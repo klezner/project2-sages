@@ -13,7 +13,6 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class SolutionManager implements SolutionService {
 
-    private final QuestRepository questRepository;
     private final GitClient gitClient;
     private final DockerApiClient dockerClient;
     private final SolutionRepository solutionRepository;
@@ -21,30 +20,33 @@ public class SolutionManager implements SolutionService {
     @Atomic
     @Override
     public Solution addSolution(Solution solution) throws IOException {
-        var questId = solution.getQuestId();
         var username = solution.getUsername();
-        var quest = questRepository.getQuest(questId);
-        var questName = quest.getQuestName();
+        var questName = solution.getQuestName();
 
         if (!gitClient.checkIfGithubBranchExists(questName, username)) {
             gitClient.createBranchOnRepository(questName, username);
         }
 
         gitClient.changeFileContentOnBranch(questName, username, solution.getSolution(), "Commited by: " + username);
-        String checkedSolution = null;
+        String textFromContainer = null;
         try {
-            checkedSolution = dockerClient.checkSolution(questName, username);
+            textFromContainer = dockerClient.checkSolution(questName, username);
         } catch (DockerCertificateException | InterruptedException | DockerException e) {
             e.printStackTrace();
         }
 
+        var verifiedSolution = verifySolution(solution, textFromContainer);
+
+        solutionRepository.saveSolution(verifiedSolution);
+        return verifiedSolution;
+    }
+
+    private Solution verifySolution(Solution solution, String checkedSolution) {
         if (checkedSolution.contains("SUCCESS")) {
             solution.setResult(true);
         } else {
             solution.setResult(false);
         }
-
-        solutionRepository.saveSolution(solution);
         return solution;
     }
 }
