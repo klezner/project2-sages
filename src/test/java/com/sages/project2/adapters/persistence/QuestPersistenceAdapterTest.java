@@ -133,6 +133,36 @@ class QuestPersistenceAdapterTest {
         );
     }
 
+    @Test
+    void findAllQuestsByDifficultyAndStatus_shouldReturnQuestsListWithGivenDifficultyAndStatus() {
+        // GIVEN
+        var difficulty = QuestDifficulty.BEGINNER;
+        var status = QuestStatus.CREATED;
+
+        var stubbedQuestEntitiesList = getStubbedQuestEntitiesList()
+                .stream()
+                .filter(questEntity -> difficulty.equals(questEntity.getDifficulty()))
+                .filter(questEntity -> status.equals(questEntity.getStatus()))
+                .collect(Collectors.toList());
+
+        var stubbedQuestsList = getStubbedQuestsList()
+                .stream()
+                .filter(quest -> difficulty.equals(quest.getDifficulty()))
+                .filter(quest -> status.equals(quest.getStatus()))
+                .collect(Collectors.toList());
+        // WHEN
+        Mockito.when(questRepository.findAllByDifficulty(difficulty)).thenReturn(stubbedQuestEntitiesList);
+        Mockito.when(questPersistenceMapper.toDomain(stubbedQuestEntitiesList)).thenReturn(stubbedQuestsList);
+        var quests = questPersistenceAdapter.findAllQuestsByDifficulty(difficulty);
+        // THEN
+        assertAll(
+                () -> assertEquals(1, quests.size()),
+                () -> assertEquals(difficulty, quests.get(0).getDifficulty()),
+                () -> assertEquals(status, quests.get(0).getStatus())
+        );
+    }
+
+
     private QuestEntity getStubbedQuestEntity() {
         return new QuestEntity(1L, "Quest name", "Repo url", QuestStatus.CREATED, QuestDifficulty.BEGINNER, "Content", new HashSet<>());
     }
