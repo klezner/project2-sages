@@ -12,6 +12,7 @@ import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashSet;
+import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -25,7 +26,6 @@ class UserPersistenceAdapterTest {
     @InjectMocks
     private UserPersistenceAdapter userPersistenceAdapter;
 
-
     @Test
     void findByLogin_shouldReturnUser() {
         // GIVEN
@@ -33,7 +33,7 @@ class UserPersistenceAdapterTest {
         var stubbedUser = getStubbedUser();
         var login = "Johnny";
         // WHEN
-        Mockito.when(userRepository.findByLogin(login)).thenReturn(stubbedUserEntity);
+        Mockito.when(userRepository.findByLogin(login)).thenReturn(Optional.of(stubbedUserEntity));
         Mockito.when(userRestMapper.toDomain(stubbedUserEntity)).thenReturn(stubbedUser);
         var user = userPersistenceAdapter.findByLogin(login);
         // THEN

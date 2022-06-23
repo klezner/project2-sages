@@ -1,5 +1,6 @@
 package com.sages.project2.adapters.persistence;
 
+import com.sages.project2.adapters.exception.UserNotFoundException;
 import com.sages.project2.adapters.persistence.repositories.JpaUserRepository;
 import com.sages.project2.adapters.rest.mappers.UserRestMapper;
 import com.sages.project2.domain.models.User;
@@ -17,7 +18,9 @@ public class UserPersistenceAdapter implements UserRepository {
     @Override
     public User findByLogin(String login) {
         var userEntity = userRepository.findByLogin(login);
-        return userRestMapper.toDomain(userEntity);
+        if (userEntity.isPresent()) {
+            return userRestMapper.toDomain(userEntity.get());
+        } throw new UserNotFoundException("User not found");
 
     }
 }
