@@ -3,9 +3,7 @@ package com.sages.project2.adapters.persistence.entities;
 import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
 import jakarta.persistence.*;
-import lombok.EqualsAndHashCode;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -13,7 +11,9 @@ import java.util.Set;
 @Entity
 @Getter
 @Setter
+@AllArgsConstructor
 @EqualsAndHashCode(of = "id")
+@NoArgsConstructor
 @Table(name = "quests")
 public class QuestEntity {
 
