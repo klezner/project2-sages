@@ -34,6 +34,7 @@ public class GlobalControllerExceptionHandler {
                 .body(exception.getMessage());
     }
 
+
 //    @ExceptionHandler(Exception.class)
 //    public ResponseEntity<ExceptionDto> onException(Exception exception) {
 //        String description = "Internal Server Error";

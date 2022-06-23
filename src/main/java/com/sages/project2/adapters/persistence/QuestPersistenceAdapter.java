@@ -31,13 +31,12 @@ public class QuestPersistenceAdapter implements QuestRepository {
     }
 
     @Override
-    public Quest getQuest(Long id) {
+    public Quest getQuest(Long id) throws QuestNotFoundException {
         var questEntity = questRepository.findById(id);
         if (questEntity.isPresent()) {
             return questMapper.toDomain(questEntity.get());
         } else {
-            // UWAGA ZMIENIĆ TEN EXCEPTION
-            throw new RuntimeException();
+            throw new QuestNotFoundException("Quest not found");
         }
     }
 

@@ -1,5 +1,6 @@
 package com.sages.project2.adapters.persistence;
 
+import com.sages.project2.adapters.exception.QuestNotFoundException;
 import com.sages.project2.adapters.persistence.entities.QuestEntity;
 import com.sages.project2.adapters.persistence.mappers.QuestPersistenceMapper;
 import com.sages.project2.adapters.persistence.repositories.JpaQuestRepository;
@@ -44,7 +45,7 @@ class QuestPersistenceAdapterTest {
     }
 
     @Test
-    void getQuest_shouldReturnQuest() {
+    void getQuest_shouldReturnQuest() throws QuestNotFoundException {
         // GIVEN
         var stubbedQuestEntity = getStubbedQuestEntity();
         var id = (long) 1;
@@ -163,7 +164,7 @@ class QuestPersistenceAdapterTest {
     }
 
     @Test
-    void findById_shouldReturnQuest() {
+    void findById_shouldReturnOptionalOfQuest() {
         // GIVEN
         var stubbedQuestEntity = getStubbedQuestEntity();
         var id = 1L;
