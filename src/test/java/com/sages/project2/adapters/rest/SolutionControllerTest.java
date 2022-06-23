@@ -45,8 +45,10 @@ class SolutionControllerTest {
         Mockito.when(solutionService.addSolution(solution)).thenReturn(solutionFromDb);
         Mockito.when(solutionRestMapper.toDto(solutionFromDb)).thenReturn(dto);
 
-        var result = mockMvc.perform(MockMvcRequestBuilders.post(SOLUTIONS_ENDPOINT_URL)
-                        .contentType(MediaType.APPLICATION_JSON))
+        var result = mockMvc.perform(MockMvcRequestBuilders
+                .post(SOLUTIONS_ENDPOINT_URL)
+                .content(objectMapper.writeValueAsString(dto))
+                .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isOk())
                 .andReturn();
