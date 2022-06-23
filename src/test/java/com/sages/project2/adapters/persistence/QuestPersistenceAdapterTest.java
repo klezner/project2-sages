@@ -116,7 +116,7 @@ class QuestPersistenceAdapterTest {
     }
 
     @Test
-    void findAllQuestsByDifficulty_shouldReturnQuestsListWithDifficulty() {
+    void findAllQuestsByDifficulty_shouldReturnQuestsListWithDifficultyBeginner() {
         // GIVEN
         var difficulty = QuestDifficulty.BEGINNER;
         var stubbedQuestEntitiesList = getStubbedQuestEntitiesList().stream().filter(questEntity -> difficulty.equals(questEntity.getDifficulty())).collect(Collectors.toList());
@@ -130,6 +130,53 @@ class QuestPersistenceAdapterTest {
                 () -> assertEquals(2, quests.size()),
                 () -> assertEquals(difficulty, quests.get(0).getDifficulty()),
                 () -> assertEquals(difficulty, quests.get(1).getDifficulty())
+        );
+    }
+
+    @Test
+    void findAllByDifficultyAndStatus_shouldReturnQuestsListWithDifficultyBeginnerAndStatusCreated() {
+        // GIVEN
+        var difficulty = QuestDifficulty.BEGINNER;
+        var status = QuestStatus.CREATED;
+        var stubbedQuestEntitiesList = getStubbedQuestEntitiesList().stream()
+                .filter(questEntity -> difficulty.equals(questEntity.getDifficulty()))
+                .filter(questEntity -> status.equals(questEntity.getStatus()))
+                .collect(Collectors.toList());
+        var stubbedQuestsList = getStubbedQuestsList().stream()
+                .filter(questEntity -> difficulty.equals(questEntity.getDifficulty()))
+                .filter(questEntity -> status.equals(questEntity.getStatus()))
+                .collect(Collectors.toList());
+        // WHEN
+        Mockito.when(questRepository.findAllByDifficultyAndStatus(difficulty, status)).thenReturn(stubbedQuestEntitiesList);
+        Mockito.when(questPersistenceMapper.toDomain(stubbedQuestEntitiesList)).thenReturn(stubbedQuestsList);
+        var quests = questPersistenceAdapter.findAllQuestsByDifficultyAndStatus(difficulty, status);
+        // THEN
+        assertAll(
+                () -> assertEquals(1, quests.size()),
+                () -> assertEquals(difficulty, quests.get(0).getDifficulty()),
+                () -> assertEquals(status, quests.get(0).getStatus())
+        );
+    }
+
+    // TODO: fix
+    @Test
+    void findById_shouldReturnQuest() {
+        // GIVEN
+        var stubbedQuestEntity = getStubbedQuestEntity();
+        var id = (long) 1;
+        var stubbedQuest = getStubbedQuest();
+        // WHEN
+        Mockito.when(questRepository.findQuestById(Mockito.anyLong())).thenReturn(stubbedQuestEntity);
+        Mockito.when(questPersistenceMapper.toDomain(stubbedQuestEntity)).thenReturn(stubbedQuest);
+        var quest = questPersistenceAdapter.findById(id);
+        // THEN
+        assertAll(
+                () -> assertEquals(stubbedQuest.getQuestName(), quest.getQuestName()),
+                () -> assertEquals(stubbedQuest.getRepoUrl(), quest.getRepoUrl()),
+                () -> assertEquals(stubbedQuest.getStatus(), quest.getStatus()),
+                () -> assertEquals(stubbedQuest.getDifficulty(), quest.getDifficulty()),
+                () -> assertEquals(stubbedQuest.getContent(), quest.getContent()),
+                () -> assertEquals(stubbedQuest.getUsers().size(), quest.getUsers().size())
         );
     }
 
