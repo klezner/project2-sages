@@ -16,7 +16,7 @@ class JpaSolutionRepositoryTest {
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
-    void dbIsEmpty_shouldFindOnlyOneEntity() {
+    void dbIsPopulated_shouldFindOnlyOneEntity() {
         assertTrue(solutionRepository.findAll().isEmpty());
         var solutionEntity = new SolutionEntity("Johnny", 1L, "Johnny", "Quest name", "Some solution", false);
         solutionRepository.save(solutionEntity);
