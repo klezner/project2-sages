@@ -63,12 +63,53 @@ class QuestPersistenceAdapterTest {
         );
     }
 
+    @Test
+    void findAllQuests_shouldReturnQuestsList() {
+        // GIVEN
+        var stubbedQuestEntitiesList = getStubbedQuestEntitiesList();
+        var stubbedQuestsList = getStubbedQuestsList();
+        // WHEN
+        Mockito.when(questRepository.findAll()).thenReturn(stubbedQuestEntitiesList);
+        Mockito.when(questPersistenceMapper.toDomain(stubbedQuestEntitiesList)).thenReturn(stubbedQuestsList);
+        var quests = questPersistenceAdapter.findAllQuests();
+        // THEN
+        assertAll(
+                () -> assertEquals(stubbedQuestsList.size(), quests.size()),
+                () -> assertEquals(stubbedQuestsList.get(0).getQuestName(), quests.get(0).getQuestName()),
+                () -> assertEquals(stubbedQuestsList.get(0).getRepoUrl(), quests.get(0).getRepoUrl()),
+                () -> assertEquals(stubbedQuestsList.get(0).getStatus(), quests.get(0).getStatus()),
+                () -> assertEquals(stubbedQuestsList.get(0).getDifficulty(), quests.get(0).getDifficulty()),
+                () -> assertEquals(stubbedQuestsList.get(0).getContent(), quests.get(0).getContent()),
+                () -> assertEquals(stubbedQuestsList.get(0).getUsers().size(), quests.get(0).getUsers().size()),
+                () -> assertEquals(stubbedQuestsList.get(1).getQuestName(), quests.get(1).getQuestName()),
+                () -> assertEquals(stubbedQuestsList.get(1).getRepoUrl(), quests.get(1).getRepoUrl()),
+                () -> assertEquals(stubbedQuestsList.get(1).getStatus(), quests.get(1).getStatus()),
+                () -> assertEquals(stubbedQuestsList.get(1).getDifficulty(), quests.get(1).getDifficulty()),
+                () -> assertEquals(stubbedQuestsList.get(1).getContent(), quests.get(1).getContent()),
+                () -> assertEquals(stubbedQuestsList.get(1).getUsers().size(), quests.get(1).getUsers().size()),
+                () -> assertEquals(stubbedQuestsList.get(2).getQuestName(), quests.get(2).getQuestName()),
+                () -> assertEquals(stubbedQuestsList.get(2).getRepoUrl(), quests.get(2).getRepoUrl()),
+                () -> assertEquals(stubbedQuestsList.get(2).getStatus(), quests.get(2).getStatus()),
+                () -> assertEquals(stubbedQuestsList.get(2).getDifficulty(), quests.get(2).getDifficulty()),
+                () -> assertEquals(stubbedQuestsList.get(2).getContent(), quests.get(2).getContent()),
+                () -> assertEquals(stubbedQuestsList.get(2).getUsers().size(), quests.get(2).getUsers().size())
+        );
+    }
+
     private QuestEntity getStubbedQuestEntity() {
         return new QuestEntity(1L, "Quest name", "Repo url", QuestStatus.CREATED, QuestDifficulty.BEGINNER, "Content", new HashSet<>());
     }
 
     private Quest getStubbedQuest() {
         return Quest.builder().questName("Quest name").repoUrl("Repo url").status(QuestStatus.CREATED).difficulty(QuestDifficulty.BEGINNER).content("Content").users(new HashSet<>()).build();
+    }
+
+    private List<QuestEntity> getStubbedQuestEntitiesList() {
+        return List.of(
+                new QuestEntity(1L, "1st Quest name", "1st Repo url", QuestStatus.CREATED, QuestDifficulty.BEGINNER, "1st Content", new HashSet<>()),
+                new QuestEntity(2L, "2nd Quest name", "2nd Repo url", QuestStatus.STARTED, QuestDifficulty.BEGINNER, "2nd Content", new HashSet<>()),
+                new QuestEntity(3L, "3rd Quest name", "3rd Repo url", QuestStatus.CREATED, QuestDifficulty.MASTER, "3rd Content", new HashSet<>())
+        );
     }
 
     private List<Quest> getStubbedQuestsList() {
