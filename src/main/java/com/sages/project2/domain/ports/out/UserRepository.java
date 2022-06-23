@@ -4,5 +4,5 @@ import com.sages.project2.domain.models.User;
 
 public interface UserRepository {
 
-    User findById(String login);
+    User findByLogin(String login);
 }
