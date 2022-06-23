@@ -12,7 +12,7 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
-
+import java.util.Optional;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -50,7 +50,7 @@ class QuestPersistenceAdapterTest {
         var id = (long) 1;
         var stubbedQuest = getStubbedQuest();
         // WHEN
-        Mockito.when(questRepository.findQuestById(Mockito.anyLong())).thenReturn(stubbedQuestEntity);
+        Mockito.when(questRepository.findById(Mockito.anyLong())).thenReturn(Optional.of(stubbedQuestEntity));
         Mockito.when(questPersistenceMapper.toDomain(stubbedQuestEntity)).thenReturn(stubbedQuest);
         var quest = questPersistenceAdapter.getQuest(id);
         // THEN
@@ -159,6 +159,27 @@ class QuestPersistenceAdapterTest {
                 () -> assertEquals(1, quests.size()),
                 () -> assertEquals(difficulty, quests.get(0).getDifficulty()),
                 () -> assertEquals(status, quests.get(0).getStatus())
+        );
+    }
+
+    @Test
+    void findById_shouldReturnQuest() {
+        // GIVEN
+        var stubbedQuestEntity = getStubbedQuestEntity();
+        var id = 1L;
+        var stubbedQuest = getStubbedQuest();
+        // WHEN
+        Mockito.when(questRepository.findById(id)).thenReturn(Optional.of(stubbedQuestEntity));
+        Mockito.when(questPersistenceMapper.toDomain(stubbedQuestEntity)).thenReturn(stubbedQuest);
+        var quest = questPersistenceAdapter.findById(id);
+        // THEN
+        assertAll(
+                () -> assertEquals(stubbedQuest.getQuestName(), quest.getQuestName()),
+                () -> assertEquals(stubbedQuest.getRepoUrl(), quest.getRepoUrl()),
+                () -> assertEquals(stubbedQuest.getStatus(), quest.getStatus()),
+                () -> assertEquals(stubbedQuest.getDifficulty(), quest.getDifficulty()),
+                () -> assertEquals(stubbedQuest.getContent(), quest.getContent()),
+                () -> assertEquals(stubbedQuest.getUsers().size(), quest.getUsers().size())
         );
     }
 

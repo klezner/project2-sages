@@ -32,8 +32,13 @@ public class QuestPersistenceAdapter implements QuestRepository {
 
     @Override
     public Quest getQuest(Long id) {
-        var questEntity = questRepository.findQuestById(id);
-        return questMapper.toDomain(questEntity);
+        var questEntity = questRepository.findById(id);
+        if (questEntity.isPresent()) {
+            return questMapper.toDomain(questEntity.get());
+        } else {
+            // UWAGA ZMIENIĆ TEN EXCEPTION
+            throw new RuntimeException();
+        }
     }
 
     public List<Quest> findAllQuests() {
