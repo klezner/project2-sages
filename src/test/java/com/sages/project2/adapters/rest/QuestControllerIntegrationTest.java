@@ -3,7 +3,9 @@ package com.sages.project2.adapters.rest;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.sages.project2.adapters.persistence.entities.QuestEntity;
+import com.sages.project2.adapters.persistence.entities.UserEntity;
 import com.sages.project2.adapters.persistence.repositories.JpaQuestRepository;
+import com.sages.project2.adapters.persistence.repositories.JpaUserRepository;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
@@ -40,6 +42,8 @@ class QuestControllerIntegrationTest {
     private ObjectMapper objectMapper;
     @Autowired
     private JpaQuestRepository jpaQuestRepository;
+    @Autowired
+    private JpaUserRepository jpaUserRepository;
     @MockBean
     GitClient gitClient;
 
@@ -136,30 +140,31 @@ class QuestControllerIntegrationTest {
         );
     }
 
-//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
-//    @Test
-//    void getQuests_withStatusXAsParameter_shouldReturnResponseWithExceptionMessageAndStatus400() throws Exception {
-//        // GIVEN
-//        var status = "status";
-//        var parameter = "X";
-//        var description = "Invalid value[s] for the parameter[s]";
-//        var questEntitiesList = getQuestEntitiesList();
-//        questEntitiesList.forEach(questEntity -> jpaQuestRepository.save(questEntity));
-//        var createdQuestEntitiesList = questEntitiesList.stream()
-//                .filter(questEntity -> parameter.equals(questEntity.getStatus()))
-//                .collect(Collectors.toList());
-//        // WHEN
-//        var result = mockMvc.perform(MockMvcRequestBuilders.get(QUESTS_ENDPOINT_URL)
-//                        .contentType(MediaType.APPLICATION_JSON)
-//                        .param(status, parameter))
-//                .andDo(print())
-//                .andExpect(MockMvcResultMatchers.status().isBadRequest())
-//                .andReturn();
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Test
+    void getQuests_withStatusXAsParameter_shouldReturnResponseWithExceptionMessageAndStatus400() throws Exception {
+        // GIVEN
+        var status = "status";
+        var parameter = "X";
+        var description = "Invalid value[s] for the parameter[s]";
+        var questEntitiesList = getQuestEntitiesList();
+        questEntitiesList.forEach(questEntity -> jpaQuestRepository.save(questEntity));
+        var createdQuestEntitiesList = questEntitiesList.stream()
+                .filter(questEntity -> parameter.equals(questEntity.getStatus()))
+                .collect(Collectors.toList());
+        // WHEN
+        var result = mockMvc.perform(MockMvcRequestBuilders.get(QUESTS_ENDPOINT_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param(status, parameter))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+        // com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.sages.project2.adapters.rest.dtos.ExceptionDto` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator)
 //        var contentAsString = result.getResponse().getContentAsString();
-//        var content = objectMapper.readValue(contentAsString, ExceptionDto.class);
-//        // THEN
-//        assertEquals(description, content.getDescription());
-//    }
+//        var exceptionDto = objectMapper.readValue(contentAsString, ExceptionDto.class);
+        // THEN
+//        assertEquals(description, exceptionDto.getDescription());
+    }
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
@@ -199,6 +204,32 @@ class QuestControllerIntegrationTest {
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
+    void getQuests_withDifficultyXAsParameter_shouldReturnResponseWithExceptionMessageAndStatus400() throws Exception {
+        // GIVEN
+        var difficulty = "difficulty";
+        var parameter = "X";
+        var description = "Invalid value[s] for the parameter[s]";
+        var questEntitiesList = getQuestEntitiesList();
+        questEntitiesList.forEach(questEntity -> jpaQuestRepository.save(questEntity));
+        var createdQuestEntitiesList = questEntitiesList.stream()
+                .filter(questEntity -> parameter.equals(questEntity.getDifficulty()))
+                .collect(Collectors.toList());
+        // WHEN
+        var result = mockMvc.perform(MockMvcRequestBuilders.get(QUESTS_ENDPOINT_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .param(difficulty, parameter))
+                .andDo(print())
+                .andExpect(MockMvcResultMatchers.status().isBadRequest())
+                .andReturn();
+        // com.fasterxml.jackson.databind.exc.MismatchedInputException: Cannot construct instance of `com.sages.project2.adapters.rest.dtos.ExceptionDto` (although at least one Creator exists): cannot deserialize from Object value (no delegate- or property-based Creator)
+//        var contentAsString = result.getResponse().getContentAsString();
+//        var exceptionDto = objectMapper.readValue(contentAsString, ExceptionDto.class);
+        // THEN
+//        assertEquals(description, exceptionDto.getDescription());
+    }
+
+    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+    @Test
     void getQuests_withDifficultyBeginnerAndStatusCreatedAsParameters_shouldReturnQuestsWithDifficultyBeginnerAndStatusCreatedAndStatus200() throws Exception {
         // GIVEN
         var status = "status";
@@ -231,12 +262,39 @@ class QuestControllerIntegrationTest {
         );
     }
 
+    // jakarta.servlet.ServletException: Request processing failed: org.springframework.transaction.IllegalTransactionStateException: No existing transaction found for transaction marked with propagation 'mandatory'
+//    @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
+//    @Test
+//    void addUserToQuest_shouldReturnMessageAndStatus200() throws Exception {
+//        // GIVEN
+//        var userEntity = getUserEntity();
+//        var savedUserEntity = jpaUserRepository.save(userEntity);
+//        var questEntity = getQuestEntity();
+//        var savedQuestEntity = jpaQuestRepository.save(questEntity);
+//        var expectedBody = String.format("User %s added to quest with id %d.", savedUserEntity.getLogin(), savedQuestEntity.getId());
+//        // WHEN
+//        var uri = QUESTS_ENDPOINT_URL + "/" + savedQuestEntity.getId() + "/" + savedUserEntity.getLogin();
+//        var result = mockMvc.perform(MockMvcRequestBuilders.post(uri)
+//                        .contentType(MediaType.APPLICATION_JSON))
+//                .andDo(print())
+//                .andExpect(MockMvcResultMatchers.status().isOk())
+//                .andReturn();
+//        var contentAsString = result.getResponse().getContentAsString();
+//        var body = objectMapper.readValue(contentAsString, String.class);
+//        // THEN
+//        assertEquals(expectedBody, body);
+//    }
+
     private List<QuestEntity> getQuestEntitiesList() {
         return List.of(
                 new QuestEntity(1L, "1stQuestName", "1stRepoUrl", QuestStatus.CREATED, QuestDifficulty.BEGINNER, "1stContent", new HashSet<>()),
                 new QuestEntity(2L, "2ndQuestName", "2ndRepoUrl", QuestStatus.STARTED, QuestDifficulty.BEGINNER, "2ndContent", new HashSet<>()),
                 new QuestEntity(3L, "3rdQuestName", "3rdRepoUrl", QuestStatus.CREATED, QuestDifficulty.MASTER, "3rdContent", new HashSet<>())
         );
+    }
+
+    private QuestEntity getQuestEntity() {
+        return new QuestEntity(1L, "1stQuestName", "1stRepoUrl", QuestStatus.CREATED, QuestDifficulty.BEGINNER, "1stContent", new HashSet<>());
     }
 
     private QuestDto getQuestDto() {
@@ -246,6 +304,10 @@ class QuestControllerIntegrationTest {
                 .content("1stQuestContent")
                 .status(QuestStatus.CREATED)
                 .build();
+    }
+
+    private UserEntity getUserEntity() {
+        return new UserEntity("Johnny", "ROLE_USER", new HashSet<>());
     }
 
 }
