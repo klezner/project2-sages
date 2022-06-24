@@ -6,10 +6,13 @@ import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
 import com.sages.project2.domain.ports.in.QuestService;
+import com.sages.project2.domain.ports.out.GitClient;
 import org.junit.jupiter.api.Test;
+import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.web.servlet.MockMvc;
@@ -36,14 +39,17 @@ class QuestControllerIntegrationTest {
     private QuestService questService;
     @Autowired
     private QuestRestMapper questRestMapper;
+    @MockBean
+    GitClient gitClient;
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
-    void questsAdminEndpoint_postQuestDto_shouldReturnSavedQuestAndStatus201() throws Exception {
+    void questsAdminEndpoint_postQuestDto_shouldReturnQuestIdAndStatus201() throws Exception {
         // GIVEN
         var request = getQuestDto();
         var requestAsString = objectMapper.writeValueAsString(request);
         // WHEN
+        Mockito.when(gitClient.createRepository(request.getQuestName())).thenReturn("https://some-mock-url");
         var result = mockMvc.perform(MockMvcRequestBuilders.post(QUESTS_ADMIN_ENDPOINT_URL)
                         .contentType(MediaType.APPLICATION_JSON)
                         .content(requestAsString))
@@ -51,15 +57,9 @@ class QuestControllerIntegrationTest {
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn();
         var contentAsString = result.getResponse().getContentAsString();
-        var content = objectMapper.readValue(contentAsString, QuestDto.class);
+        var questId = objectMapper.readValue(contentAsString, Long.class);
         // THEN
-        assertAll(
-                () -> assertEquals(request.getQuestName(), content.getQuestName()),
-                () -> assertEquals(request.getDifficulty(), content.getDifficulty()),
-                () -> assertEquals(request.getContent(), content.getContent()),
-                () -> assertEquals(request.getStatus(), content.getStatus()),
-                () -> assertEquals(request.getUsers(), content.getUsers())
-        );
+        assertEquals(questId, 6);
     }
 
     private List<QuestDto> getQuestDtosList() {
@@ -71,7 +71,12 @@ class QuestControllerIntegrationTest {
     }
 
     private QuestDto getQuestDto() {
-        return QuestDto.builder().questName("1stQuestName").difficulty(QuestDifficulty.BEGINNER).content("1stQuestContent").status(QuestStatus.CREATED).build();
+        return QuestDto.builder()
+                .questName("1stQuestName")
+                .difficulty(QuestDifficulty.BEGINNER)
+                .content("1stQuestContent")
+                .status(QuestStatus.CREATED)
+                .build();
     }
 
 }
