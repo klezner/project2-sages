@@ -16,9 +16,11 @@ public class UserPersistenceAdapter implements UserRepository {
     private final UserRestMapper userRestMapper;
 
     @Override
-    public User findById(String login) {
-        return userRepository.findById(login)
-                .map(userRestMapper::toDomain)
-                .orElseThrow(() -> new UserNotFoundException("User not found with login: " + login));
+    public User findByLogin(String login) {
+        var userEntity = userRepository.findByLogin(login);
+        if (userEntity.isPresent()) {
+            return userRestMapper.toDomain(userEntity.get());
+        } throw new UserNotFoundException("User not found");
+
     }
 }

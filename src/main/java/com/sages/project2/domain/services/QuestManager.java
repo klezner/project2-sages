@@ -58,7 +58,7 @@ public class QuestManager implements QuestService {
     @Override
     public void addUserToQuest(Long questId, String userLogin) {
         Quest quest = questRepository.findById(questId);
-        User user = userRepository.findById(userLogin);
+        User user = userRepository.findByLogin(userLogin);
         quest.getUsers().add(user);
         questRepository.saveQuest(quest);
     }

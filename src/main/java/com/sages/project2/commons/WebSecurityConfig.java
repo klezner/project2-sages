@@ -65,7 +65,7 @@ public class WebSecurityConfig {
                     Optional.ofNullable(jpaUserRepository.findByLogin(login))
                             .ifPresentOrElse(
                                     user -> mappedAuthorities
-                                            .addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(user.getRole())),
+                                            .addAll(AuthorityUtils.commaSeparatedStringToAuthorityList(user.get().getRole())),
                                     () -> jpaUserRepository.save(new UserEntity(login, ROLE_USER, quests)));
                 }
             });
