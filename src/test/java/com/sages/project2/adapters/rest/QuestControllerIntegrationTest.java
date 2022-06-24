@@ -45,7 +45,7 @@ class QuestControllerIntegrationTest {
     @Autowired
     private JpaUserRepository jpaUserRepository;
     @MockBean
-    GitClient gitClient;
+    private GitClient gitClient;
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
