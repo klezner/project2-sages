@@ -1,12 +1,18 @@
 package com.sages.project2.adapters.rest;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.sages.project2.adapters.persistence.entities.QuestEntity;
+import com.sages.project2.adapters.persistence.repositories.JpaQuestRepository;
 import com.sages.project2.adapters.rest.dtos.QuestDto;
 import com.sages.project2.adapters.rest.mappers.QuestRestMapper;
 import com.sages.project2.domain.QuestDifficulty;
 import com.sages.project2.domain.QuestStatus;
+import com.sages.project2.domain.models.Quest;
 import com.sages.project2.domain.ports.in.QuestService;
 import com.sages.project2.domain.ports.out.GitClient;
+import com.sages.project2.domain.ports.out.QuestRepository;
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.EntityTransaction;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mockito;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,27 +45,31 @@ class QuestControllerIntegrationTest {
     private QuestService questService;
     @Autowired
     private QuestRestMapper questRestMapper;
+    @Autowired
+    private JpaQuestRepository jpaQuestRepository;
     @MockBean
     GitClient gitClient;
+    @MockBean
+    private EntityManager entityManager;
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.AFTER_METHOD)
     @Test
     void questsAdminEndpoint_postQuestDto_shouldReturnQuestIdAndStatus201() throws Exception {
-        // GIVEN
+        var size = jpaQuestRepository.findAll().size();
         var request = getQuestDto();
         var requestAsString = objectMapper.writeValueAsString(request);
         // WHEN
         Mockito.when(gitClient.createRepository(request.getQuestName())).thenReturn("https://some-mock-url");
         var result = mockMvc.perform(MockMvcRequestBuilders.post(QUESTS_ADMIN_ENDPOINT_URL)
-                        .contentType(MediaType.APPLICATION_JSON)
-                        .content(requestAsString))
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(requestAsString))
                 .andDo(print())
                 .andExpect(MockMvcResultMatchers.status().isCreated())
                 .andReturn();
         var contentAsString = result.getResponse().getContentAsString();
         var questId = objectMapper.readValue(contentAsString, Long.class);
         // THEN
-        assertEquals(questId, 6);
+        assertEquals(questId, size + 1);
     }
 
     private List<QuestDto> getQuestDtosList() {
