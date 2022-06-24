@@ -23,7 +23,8 @@ class JpaUserRepositoryTest {
         var userEntity = new UserEntity("Johnny", "ROLE_USER", new HashSet<>());
         userRepository.save(userEntity);
         assertEquals(1, userRepository.findAll().size());
-        var foundEntity = userRepository.findByLogin("Johnny");
+        var foundEntityOptional = userRepository.findByLogin("Johnny");
+        var foundEntity = foundEntityOptional.get();
         assertAll(
                 () -> assertEquals(foundEntity.getLogin(), userEntity.getLogin()),
                 () -> assertEquals(foundEntity.getRole(), userEntity.getRole()),
@@ -33,9 +34,9 @@ class JpaUserRepositoryTest {
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
     @Test
-    void dbIsEmpty_shouldNotFindValidUserByLoginAndReturnNull() {
+    void dbIsEmpty_shouldFindEmptyOptionalOfUser() {
         assertTrue(userRepository.findAll().isEmpty());
-        assertNull(userRepository.findByLogin("Johnny"));
+        assertTrue(userRepository.findByLogin("Johnny").isEmpty());
     }
 
 }
