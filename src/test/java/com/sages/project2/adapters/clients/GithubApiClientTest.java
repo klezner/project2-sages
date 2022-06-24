@@ -10,6 +10,7 @@ import java.io.IOException;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@Disabled
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @SpringBootTest
 class GithubApiClientTest {

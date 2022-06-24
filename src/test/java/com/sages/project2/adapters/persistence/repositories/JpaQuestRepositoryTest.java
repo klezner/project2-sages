@@ -25,7 +25,8 @@ class JpaQuestRepositoryTest {
         var questEntity = new QuestEntity(1L, "Quest name", "Repo url", QuestStatus.CREATED, QuestDifficulty.BEGINNER, "Content", new HashSet<>());
         questRepository.save(questEntity);
         assertEquals(1, questRepository.findAll().size());
-        var foundEntity = questRepository.findQuestById(1L);
+        var foundEntityOptional = questRepository.findById(1L);
+        var foundEntity = foundEntityOptional.get();
         assertAll(
                 () -> assertEquals(foundEntity.getId(), questEntity.getId()),
                 () -> assertEquals(foundEntity.getQuestName(), questEntity.getQuestName()),
@@ -41,7 +42,7 @@ class JpaQuestRepositoryTest {
     @Test
     void dbIsEmpty_shouldNotFindValidQuestByIdAndReturnNull() {
         assertTrue(questRepository.findAll().isEmpty());
-        assertNull(questRepository.findQuestById(1L));
+        assertTrue(questRepository.findById(1L).isEmpty());
     }
 
     @DirtiesContext(methodMode = DirtiesContext.MethodMode.BEFORE_METHOD)
